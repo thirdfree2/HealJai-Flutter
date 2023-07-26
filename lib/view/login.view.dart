@@ -1,16 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/utils/global.colors.dart';
 import 'package:flutter_application_1/view/register.view.dart';
-import 'package:flutter_application_1/view/widgets/button.global.dart';
-import 'package:flutter_application_1/view/widgets/social.login.dart';
-import 'package:flutter_application_1/view/widgets/text.form.global.dart';
-import 'package:get/get_navigation/get_navigation.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
 
+class LoginView extends StatefulWidget {
+  const LoginView({Key? key}) : super(key: key);
 
-class LoginView extends StatelessWidget {
-  LoginView({Key? key}) : super(key: key);
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  @override
+  State<LoginView> createState() => _LoginViewState();
+}
+
+class _LoginViewState extends State<LoginView> {
+  final formKey = GlobalKey<FormState>();
+
+  TextEditingController password = TextEditingController();
+  TextEditingController email = TextEditingController();
+  Future sign_in() async {
+    String url = "http://10.1.203.57/project_api_testing/login.php";
+    final response = await http.post(Uri.parse(url), body: {
+      'password': password.text,
+      'email': email.text,
+    });
+    var data = json.decode(response.body);
+    if (data == "Error") {
+      Navigator.pushNamed(context, 'register');
+    } else {
+      Navigator.pushNamed(context, 'home');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,14 +45,17 @@ class LoginView extends StatelessWidget {
                 const SizedBox(
                   height: 100,
                 ),
-                Container(
-                  alignment: Alignment.center,
-                  child: Text(
-                    'HealJaii',
-                    style: TextStyle(
-                      color: GlobalColors.mainColor,
-                      fontSize: 35,
-                      fontWeight: FontWeight.bold,
+                Form(
+                  key: formKey,
+                  child: Container(
+                    alignment: Alignment.center,
+                    child: Text(
+                      'HealJaii',
+                      style: TextStyle(
+                        color: GlobalColors.mainColor,
+                        fontSize: 35,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
@@ -51,29 +73,63 @@ class LoginView extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                TextFormGlobal(
-                  controller: emailController,
-                  text: 'Email',
-                  obscure: false,
-                  textInputType: TextInputType.emailAddress,
+                SizedBox(
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(), labelText: 'Your Email'),
+                    validator: (val) {
+                      if (val!.isEmpty) {
+                        return 'Empty';
+                      }
+                      return null;
+                    },
+                    controller: email,
+                  ),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
-                TextFormGlobal(
-                  controller: passwordController,
-                  text: 'Password',
-                  textInputType: TextInputType.text,
-                  obscure: true,
+                SizedBox(
+                  child: TextFormField(
+                    obscureText: true,
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Your Password'),
+                    validator: (val) {
+                      if (val!.isEmpty) {
+                        return 'Empty';
+                      }
+                      return null;
+                    },
+                    controller: password,
+                  ),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
-                const ButtonGlobal(),
-                const SizedBox(
-                  height: 25,
+                SizedBox(
+                  width: 380,
+                  height: 60,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        primary: const Color(0xFF3F60A0),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15))),
+                    onPressed: () {
+                      bool pass = formKey.currentState!.validate();
+                      if (pass) {
+                        sign_in();
+                      }
+                    },
+                    child: const Text(
+                      'Sign up',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
                 ),
-                const SocialLogin(),
               ],
             ),
           ),
@@ -91,9 +147,8 @@ class LoginView extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterView()
-                  
-                ));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => RegisterView()));
               },
               child: Text(
                 'Sign Up',

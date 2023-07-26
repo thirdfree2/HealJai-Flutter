@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/view/register.view.dart';
 import 'package:flutter_application_1/view/splash.view.dart';
 import 'package:flutter_application_1/view/index.view.dart';
 import 'package:get/get_navigation/get_navigation.dart';
@@ -12,9 +13,14 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const GetMaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: IndexView(),
+      home: SplashView(),
+      routes: {
+        'register': (context) => RegisterView(),
+        'home': (context) => IndexView(),
+      },
     );
   }
 }
+

@@ -1,12 +1,9 @@
 import "package:flutter/material.dart";
-import 'package:flutter_application_1/api_connection/api_connection.dart';
 import 'dart:convert';
-import 'package:provider/provider.dart';
 import 'package:flutter_application_1/utils/global.colors.dart';
-import 'package:flutter_application_1/view/login.view.dart';
 import 'package:http/http.dart' as http;
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:flutter_application_1/users/model/user.dart';
+import 'dart:async';
+
 
 class RegisterView extends StatefulWidget {
   const RegisterView({Key? key}) : super(key: key);
@@ -18,53 +15,23 @@ class RegisterView extends StatefulWidget {
 class _RegisterViewState extends State<RegisterView> {
   final formKey = GlobalKey<FormState>();
 
-  var nameController = TextEditingController();
-  var emailController = TextEditingController();
-  var passwordController = TextEditingController();
+  TextEditingController username = TextEditingController();
+  TextEditingController password = TextEditingController();
+  TextEditingController confirmpassword = TextEditingController();
+  TextEditingController email = TextEditingController();
 
-  validateUserEmail() async {
-    try {
-      var res = await http.post(
-        Uri.parse(API.validateEmail),
-        body: {
-          'user_email': emailController.text.trim(),
-        },
-      );
-      if (res.statusCode == 200) {
-        var resBody = jsonDecode(res.body);
-        if (resBody['emailFound'] == true) {
-          Fluttertoast.showToast(
-              msg: "Email is already in someone else use. Try another email");
-        } else {
-          resgisterAndSaveUserRecord();
-        }
-      }
-    } catch (e) {}
-  }
-
-  resgisterAndSaveUserRecord() async {
-    User userModel = User(
-      1,
-      nameController.text.trim(),
-      emailController.text.trim(),
-      passwordController.text.trim(),
-    );
-    try {
-      var res = await http.post(
-        Uri.parse(API.signUp),
-        body: userModel.toJson(),
-      );
-      if (res.statusCode == 200) {
-        var resBodyOfSignUp = jsonDecode(res.body);
-        if (resBodyOfSignUp['success'] == true) {
-          Fluttertoast.showToast(msg: "You are SignUp Successfully.");
-        } else {
-          Fluttertoast.showToast(msg: "Error, TryAgain.");
-        }
-      }
-    } catch (e) {
-      print(e.toString());
-      Fluttertoast.showToast(msg: e.toString());
+  Future sign_up() async {
+    String url = "http://10.1.203.57/project_api_testing/register.php";
+    final response = await http.post(Uri.parse(url), body: {
+      'username': username.text,
+      'password': password.text,
+      'email': email.text,
+    });
+    var data = json.decode(response.body);
+    if (data == "Error") {
+      Navigator.pushNamed(context, 'register');
+    } else {
+      Navigator.pushNamed(context, 'home');
     }
   }
 
@@ -122,13 +89,13 @@ class _RegisterViewState extends State<RegisterView> {
                           decoration: InputDecoration(
                               border: OutlineInputBorder(),
                               labelText: 'Your name'),
-                          controller: nameController,
                           validator: (val) {
                             if (val!.isEmpty) {
                               return 'Empty';
                             }
                             return null;
                           },
+                          controller: username,
                         ),
                       ),
                       SizedBox(
@@ -139,7 +106,27 @@ class _RegisterViewState extends State<RegisterView> {
                         child: TextFormField(
                           decoration: InputDecoration(
                               border: OutlineInputBorder(), labelText: 'Email'),
-                          controller: emailController,
+                          validator: (val) {
+                            if (val!.isEmpty) {
+                              return 'Empty';
+                            }
+                            return null;
+                          },
+                          controller: email,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      SizedBox(
+                        width: 350,
+                        child: TextFormField(
+                          obscureText: true,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Password',
+                          ),
+                          controller: password,
                           validator: (val) {
                             if (val!.isEmpty) {
                               return 'Empty';
@@ -157,12 +144,14 @@ class _RegisterViewState extends State<RegisterView> {
                           obscureText: true,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(),
-                            labelText: 'Password',
+                            labelText: 'Confrim Password',
                           ),
-                          controller: passwordController,
+                          controller: confirmpassword,
                           validator: (val) {
                             if (val!.isEmpty) {
                               return 'Empty';
+                            } else if (val != password.text) {
+                              return 'password not match';
                             }
                             return null;
                           },
@@ -171,30 +160,8 @@ class _RegisterViewState extends State<RegisterView> {
                       SizedBox(
                         height: 20,
                       ),
-                      // SizedBox(
-                      //   width: 350,
-                      //   child: TextFormField(
-                      //     obscureText: true,
-                      //     decoration: InputDecoration(
-                      //       border: OutlineInputBorder(),
-                      //       labelText: 'Confrim Password',
-                      //     ),
-                      //     controller: passwordController,
-                      //     validator: (val) {
-                      //       if (val!.isEmpty) {
-                      //         return 'Empty';
-                      //       } else if (val != passwordController.text) {
-                      //         return 'Password not match';
-                      //       }
-                      //       return null;
-                      //     },
-                      //   ),
-                      // ),
                       SizedBox(
-                        height: 20,
-                      ),
-                      SizedBox(
-                        width: 350,
+                        width: 380,
                         height: 60,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
@@ -202,7 +169,10 @@ class _RegisterViewState extends State<RegisterView> {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(15))),
                           onPressed: () {
-                            if (formKey.currentState!.validate()) {}
+                            bool pass = formKey.currentState!.validate();
+                            if (pass) {
+                              sign_up();
+                            }
                           },
                           child: const Text(
                             'Sign up',
