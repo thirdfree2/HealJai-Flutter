@@ -21,7 +21,7 @@ class _RegisterViewState extends State<RegisterView> {
   TextEditingController email = TextEditingController();
 
   Future sign_up() async {
-    String url = "http://10.1.203.57/project_api_testing/register.php";
+    String url = "http://localhost/project_api_testing/register.php";
     final response = await http.post(Uri.parse(url), body: {
       'username': username.text,
       'password': password.text,

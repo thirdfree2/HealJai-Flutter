@@ -18,7 +18,7 @@ class _LoginViewState extends State<LoginView> {
   TextEditingController password = TextEditingController();
   TextEditingController email = TextEditingController();
   Future sign_in() async {
-    String url = "http://10.1.203.57/project_api_testing/login.php";
+    String url = "http://localhost/project_api_testing/login.php";
     final response = await http.post(Uri.parse(url), body: {
       'password': password.text,
       'email': email.text,
