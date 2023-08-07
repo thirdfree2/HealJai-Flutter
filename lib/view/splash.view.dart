@@ -1,9 +1,12 @@
 import 'dart:async';
 
+import 'package:flutter_application_1/view/screens/auth_page.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/utils/global.colors.dart';
 import 'package:flutter_application_1/view/login.view.dart';
+
+import '../utils/config.dart';
 
 class SplashView extends StatelessWidget {
   const SplashView({Key? key}) : super(key: key);
@@ -11,10 +14,10 @@ class SplashView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Timer(const Duration(seconds: 2), () {
-      Get.to(LoginView());
+      Get.to(AuthPage());
     });
     return Scaffold(
-      backgroundColor: GlobalColors.mainColor,
+      backgroundColor: Config.primaryColor,
       body: Center(
           child: Text(
         'HealJaii',

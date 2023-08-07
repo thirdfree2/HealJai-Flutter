@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/view/register.view.dart';
+import 'package:flutter_application_1/utils/config.dart';
+import 'package:flutter_application_1/view/login.view.dart';
+import 'package:flutter_application_1/view/main.layout.dart';
+import 'package:flutter_application_1/view/screens/auth_page.dart';
 import 'package:flutter_application_1/view/splash.view.dart';
-import 'package:flutter_application_1/view/index.view.dart';
-import 'package:get/get_navigation/get_navigation.dart';
+import 'package:get/get.dart';
 
 void main() {
   runApp(App());
@@ -10,17 +12,40 @@ void main() {
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
-
+  static final navigatorKey = GlobalKey<NavigatorState>();
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      navigatorKey: navigatorKey,
+      title: 'Flutter Doctor APp',
       debugShowCheckedModeBanner: false,
-      home: SplashView(),
+      theme: ThemeData(
+        inputDecorationTheme: const InputDecorationTheme(
+          focusColor: Config.primaryColor,
+          border: Config.outlinedBorder,
+          focusedBorder: Config.focusBorder,
+          errorBorder: Config.errorBorder,
+          enabledBorder: Config.outlinedBorder,
+          floatingLabelStyle: TextStyle(color: Config.primaryColor),
+          prefixIconColor: Colors.black38,
+        ),
+        scaffoldBackgroundColor: Colors.white,
+        bottomNavigationBarTheme: BottomNavigationBarThemeData(
+          backgroundColor: Config.primaryColor,
+          selectedItemColor: Colors.white,
+          showSelectedLabels: true,
+          showUnselectedLabels: false,
+          unselectedItemColor: Colors.grey.shade700,
+          elevation: 10,
+          type: BottomNavigationBarType.fixed,
+        ),
+      ),
+      initialRoute: '/',
       routes: {
-        'register': (context) => RegisterView(),
-        'home': (context) => IndexView(),
+        // '/': (context) => const SplashView(),
+        'auth': (context) => const AuthPage(),
+        '/': (context) => const MainView(),
       },
     );
   }
 }
-
