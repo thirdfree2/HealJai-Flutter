@@ -4,7 +4,6 @@ import 'package:flutter_application_1/utils/global.colors.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 
-
 class RegisterView extends StatefulWidget {
   const RegisterView({Key? key}) : super(key: key);
 

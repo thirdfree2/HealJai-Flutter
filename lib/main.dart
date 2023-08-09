@@ -20,7 +20,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       navigatorKey: navigatorKey,
-      title: 'Flutter Doctor APp',
+      title: 'Flutter Doctor App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         inputDecorationTheme: const InputDecorationTheme(
@@ -45,12 +45,12 @@ class App extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        // '/': (context) => const SplashView(),
+        '/': (context) => const SplashView(),
         'auth': (context) => const AuthPage(),
-        '/': (context) => const MainView(),
+        'main': (context) => const MainView(),
         'doc_details': (context) => const DoctorDetails(),
         'booking_page': (context) => const BookingPage(),
-        'success_booking':(context) => const AppointmentBooked(),
+        'success_booking': (context) => const AppointmentBooked(),
       },
     );
   }
