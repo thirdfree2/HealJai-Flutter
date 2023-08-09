@@ -109,7 +109,7 @@ class _BookingPageState extends State<BookingPage> {
               padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 80),
               child: Button(
                   width: double.infinity,
-                  title: 'Make Appointment',
+                  title: 'Make Appoint-ment',
                   onPressed: () {
                     Navigator.of(context).pushNamed('success_booking');
                   },
