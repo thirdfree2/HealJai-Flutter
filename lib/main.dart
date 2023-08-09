@@ -3,6 +3,9 @@ import 'package:flutter_application_1/utils/config.dart';
 import 'package:flutter_application_1/view/login.view.dart';
 import 'package:flutter_application_1/view/main.layout.dart';
 import 'package:flutter_application_1/view/screens/auth_page.dart';
+import 'package:flutter_application_1/view/screens/booking_page.dart';
+import 'package:flutter_application_1/view/screens/doctor_details.dart';
+import 'package:flutter_application_1/view/screens/success_booked.dart';
 import 'package:flutter_application_1/view/splash.view.dart';
 import 'package:get/get.dart';
 
@@ -45,6 +48,9 @@ class App extends StatelessWidget {
         // '/': (context) => const SplashView(),
         'auth': (context) => const AuthPage(),
         '/': (context) => const MainView(),
+        'doc_details': (context) => const DoctorDetails(),
+        'booking_page': (context) => const BookingPage(),
+        'success_booking':(context) => const AppointmentBooked(),
       },
     );
   }
