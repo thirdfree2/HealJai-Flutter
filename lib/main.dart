@@ -46,13 +46,13 @@ class App extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        // '/': (context) => const SplashView(),
+        '/': (context) => const SplashView(),
         'auth': (context) => const AuthPage(),
-        '/': (context) => const MainView(),
+        'main': (context) => const MainView(),
         'doc_details': (context) => const DoctorDetails(),
         'booking_page': (context) => const BookingPage(),
-        'success_booking':(context) => const AppointmentBooked(),
-        'videocall':(context) => const Callvideo(),
+        'success_booking': (context) => const AppointmentBooked(),
+        'videocall': (context) => const Callvideo(),
       },
     );
   }
