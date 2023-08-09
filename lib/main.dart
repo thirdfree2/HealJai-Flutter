@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/utils/config.dart';
+import 'package:flutter_application_1/view/call.view.dart';
 import 'package:flutter_application_1/view/login.view.dart';
 import 'package:flutter_application_1/view/main.layout.dart';
 import 'package:flutter_application_1/view/screens/auth_page.dart';
@@ -51,6 +52,7 @@ class App extends StatelessWidget {
         'doc_details': (context) => const DoctorDetails(),
         'booking_page': (context) => const BookingPage(),
         'success_booking':(context) => const AppointmentBooked(),
+        'videocall':(context) => const Callvideo(),
       },
     );
   }

@@ -76,13 +76,37 @@ class _AppointmentCardState extends State<AppointmentCard> {
                     child: ElevatedButton(
                       child: const Text(
                         'Completed',
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 13,
+                        ),
                       ),
                       style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blue),
+                        backgroundColor: Colors.blue,
+                      ),
                       onPressed: () {},
                     ),
                   ),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  Expanded(
+                    child: ElevatedButton(
+                      child: const Text(
+                        'Start VideoCall',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color.fromARGB(255, 55, 146, 103),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pushNamed('videocall');
+                      },
+                    ),
+                  )
                 ],
               ),
             ],
