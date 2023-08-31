@@ -44,9 +44,9 @@ class _DoctorDetailsState extends State<DoctorDetails> {
               padding: const EdgeInsets.all(20),
               child: Button(
                 width: double.infinity,
-                title: 'Book Appointment',
+                title: 'Start Chating',
                 onPressed: () {
-                  Navigator.of(context).pushNamed('booking_page');
+                  Navigator.of(context).pushNamed('chat_page');
                 },
                 disable: false,
               ),

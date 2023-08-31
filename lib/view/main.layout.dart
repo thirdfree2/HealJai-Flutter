@@ -33,19 +33,36 @@ class _MainViewState extends State<MainView> {
         onTap: (page) {
           setState(() {
             currentPage = page;
-            _page.animateToPage(page,
-                duration: const Duration(microseconds: 500),
-                curve: Curves.easeInOut,
-                );
+            _page.animateToPage(
+              page,
+              duration: const Duration(microseconds: 500),
+              curve: Curves.easeInOut,
+            );
           });
         },
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.houseChimneyMedical),
+            icon: Icon(
+              Icons.home,
+            ),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.solidCalendarCheck),
+            icon: Icon(
+              Icons.chat,
+            ),
+            label: 'Appointments',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.menu_book,
+            ),
+            label: 'Appointments',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.account_circle,
+            ),
             label: 'Appointments',
           ),
         ],

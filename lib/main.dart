@@ -5,7 +5,10 @@ import 'package:flutter_application_1/view/login.view.dart';
 import 'package:flutter_application_1/view/main.layout.dart';
 import 'package:flutter_application_1/view/screens/auth_page.dart';
 import 'package:flutter_application_1/view/screens/booking_page.dart';
+import 'package:flutter_application_1/view/screens/chat_page.dart';
+import 'package:flutter_application_1/view/screens/chat_screen_page.dart';
 import 'package:flutter_application_1/view/screens/doctor_details.dart';
+import 'package:flutter_application_1/view/screens/register_page.dart';
 import 'package:flutter_application_1/view/screens/success_booked.dart';
 import 'package:flutter_application_1/view/splash.view.dart';
 import 'package:get/get.dart';
@@ -46,13 +49,15 @@ class App extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => const SplashView(),
-        'auth': (context) => const AuthPage(),
-        'main': (context) => const MainView(),
+        // '/': (context) => const SplashView(),
+        // 'auth': (context) => const AuthPage(),
+        // 'register': (context)  => const RigisterPage(),
+        '/': (context) => const MainView(),
         'doc_details': (context) => const DoctorDetails(),
         'booking_page': (context) => const BookingPage(),
         'success_booking': (context) => const AppointmentBooked(),
-        'videocall': (context) => const Callvideo(),
+        // 'videocall': (context) => const Callvideo(),
+        'chat_page': (context) => ChatdocScreen(),
       },
     );
   }

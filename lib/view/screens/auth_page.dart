@@ -69,7 +69,9 @@ class _AuthPageState extends State<AuthPage> {
                     ),
                   ),
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).pushNamed('register');
+                    },
                     child: Text(
                       ' Sign Up',
                       style: TextStyle(

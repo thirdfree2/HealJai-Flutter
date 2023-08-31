@@ -112,16 +112,28 @@ class _HomePageState extends State<HomePage> {
                     },
                   ),
                 ),
-                Config.spaceSmall,
-                const Text(
-                  'Appointment Today',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+                Padding(
+                  padding: EdgeInsets.only(top: 16, left: 5, right: 5),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: "Search...",
+                      hintStyle: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: const Color.fromARGB(255, 255, 255, 255)),
+                      prefixIcon: Icon(
+                        Icons.search,
+                        color: const Color.fromARGB(255, 255, 255, 255),
+                        size: 20,
+                      ),
+                      filled: true,
+                      fillColor: Color.fromARGB(255, 65, 112, 98),
+                      contentPadding: EdgeInsets.all(8),
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: BorderSide(color: Colors.grey.shade100)),
+                    ),
                   ),
                 ),
-                Config.spaceSmall,
-                AppointmentCard(),
                 Config.spaceSmall,
                 const Text(
                   'The Doctors',
