@@ -24,7 +24,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       navigatorKey: navigatorKey,
-      title: 'Flutter Doctor APp',
+      title: 'Flutter Doctor App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         inputDecorationTheme: const InputDecorationTheme(
@@ -56,8 +56,7 @@ class App extends StatelessWidget {
         'doc_details': (context) => const DoctorDetails(),
         'booking_page': (context) => const BookingPage(),
         'success_booking': (context) => const AppointmentBooked(),
-        // 'videocall': (context) => const Callvideo(),
-        'chat_page': (context) => ChatdocScreen(),
+        'videocall': (context) => const Callvideo(),
       },
     );
   }
