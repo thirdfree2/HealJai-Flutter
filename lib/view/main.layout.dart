@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/view/screens/appoinment_page.dart';
 import 'package:flutter_application_1/view/screens/home_page.dart';
@@ -39,7 +41,7 @@ class _MainViewState extends State<MainView> {
               curve: Curves.easeInOut,
             );
           });
-        },
+        }, 
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(
@@ -65,6 +67,8 @@ class _MainViewState extends State<MainView> {
             ),
             label: 'Appointments',
           ),
+          BottomNavigationBarItem(
+              icon: FaIcon(FontAwesomeIcons.user), label: 'Profile'),
         ],
       ),
     );
