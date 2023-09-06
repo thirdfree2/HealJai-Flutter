@@ -138,7 +138,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(5),
             child: Text(
               'The Doctors',
               style: TextStyle(
@@ -154,7 +154,6 @@ class _HomePageState extends State<HomePage> {
               itemBuilder: (BuildContext context, int index) {
                 final psychologist = psychologistList[index];
                 final name = psychologist['doc_username'];
-
                 return ListTile(
                   leading: const Icon(Icons.list),
                   trailing: const Text(
