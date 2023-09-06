@@ -38,7 +38,6 @@ class _DoctorDetailsState extends State<DoctorDetails> {
         child: Column(
           children: <Widget>[
             Config.spaceSmall,
-            AboutDoctor(),
             const Spacer(),
             Padding(
               padding: const EdgeInsets.all(20),

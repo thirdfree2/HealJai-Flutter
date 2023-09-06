@@ -52,6 +52,7 @@ class App extends StatelessWidget {
         'doc_details': (context) => const DoctorDetails(),
         'booking_page': (context) => const BookingPage(),
         'success_booking': (context) => const AppointmentBooked(),
+        'videocall': (context) => const Callvideo(),
       },
     );
   }

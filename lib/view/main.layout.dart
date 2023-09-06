@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/view/screens/appoinment_page.dart';
 import 'package:flutter_application_1/view/screens/home_page.dart';
@@ -33,12 +35,13 @@ class _MainViewState extends State<MainView> {
         onTap: (page) {
           setState(() {
             currentPage = page;
-            _page.animateToPage(page,
-                duration: const Duration(microseconds: 500),
-                curve: Curves.easeInOut,
-                );
+            _page.animateToPage(
+              page,
+              duration: const Duration(microseconds: 500),
+              curve: Curves.easeInOut,
+            );
           });
-        },
+        }, 
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: FaIcon(FontAwesomeIcons.houseChimneyMedical),
@@ -48,6 +51,8 @@ class _MainViewState extends State<MainView> {
             icon: FaIcon(FontAwesomeIcons.solidCalendarCheck),
             label: 'Appointments',
           ),
+          BottomNavigationBarItem(
+              icon: FaIcon(FontAwesomeIcons.user), label: 'Profile'),
         ],
       ),
     );
