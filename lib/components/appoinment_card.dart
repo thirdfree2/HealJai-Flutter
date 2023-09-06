@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../utils/config.dart';
 
@@ -54,6 +55,8 @@ class _AppointmentCardState extends State<AppointmentCard> {
               ),
               Config.spaceSmall,
               const ScheduleCard(),
+              Config.spaceSmall,
+              const ChatCard(),
               Config.spaceSmall,
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -162,6 +165,43 @@ class ScheduleCard extends StatelessWidget {
               color: Colors.white,
             ),
           ))
+        ],
+      ),
+    );
+  }
+}
+
+class ChatCard extends StatelessWidget {
+  const ChatCard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Config.primaryColor,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      width: double.infinity,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Expanded(
+            child: ElevatedButton(
+              child: const Text(
+                'Start Chat',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 12,
+                ),
+              ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color.fromARGB(255, 55, 146, 103),
+              ),
+              onPressed: () {
+                Navigator.of(context).pushNamed('chat_page');
+              },
+            ),
+          )
         ],
       ),
     );

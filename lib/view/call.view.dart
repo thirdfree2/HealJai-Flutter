@@ -13,16 +13,16 @@ class _CallvideoState extends State<Callvideo> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: ZegoUIKitPrebuiltCall(
-          appID: 1240184661,
-          appSign: '33a78b828692b268f48acef1fe6e9e280266ca74fe10c466b6fef94f81efb641',
-          callID: '54321',
-          config: ZegoUIKitPrebuiltCallConfig.oneOnOneVideoCall()
+          child: ZegoUIKitPrebuiltCall(
+        appID: 748440981,
+        appSign:
+            'eb899a200a07934471d2943ab298d63befbd7c8b80371d7b3ec52a02de7b9e1e',
+        callID: '54321',
+        config: ZegoUIKitPrebuiltCallConfig.oneOnOneVideoCall()
           ..onOnlySelfInRoom = (context) => Navigator.pop(context),
-          userID: '1234',
-          userName: 'User01',
-        )
-      ),
+        userID: '1234',
+        userName: 'Raau',
+      )),
     );
   }
 }
