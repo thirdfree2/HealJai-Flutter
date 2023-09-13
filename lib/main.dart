@@ -8,6 +8,7 @@ import 'package:flutter_application_1/view/screens/booking_page.dart';
 import 'package:flutter_application_1/view/screens/chat_page.dart';
 import 'package:flutter_application_1/view/screens/chat_screen_page.dart';
 import 'package:flutter_application_1/view/screens/doctor_details.dart';
+import 'package:flutter_application_1/view/screens/homefix_page.dart';
 import 'package:flutter_application_1/view/screens/register_page.dart';
 import 'package:flutter_application_1/view/screens/success_booked.dart';
 import 'package:flutter_application_1/view/splash.view.dart';
@@ -49,10 +50,11 @@ class App extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => const SplashView(),
+        // '/': (context) => const SplashView(),
+        // '/': (context) => const HomePagefix(),
         'auth': (context) => const AuthPage(),
         'register': (context) => const RigisterPage(),
-        'main': (context) => const MainView(),
+        '/': (context) => const MainView(),
         'doc_details': (context) => const DoctorDetails(),
         'booking_page': (context) => const BookingPage(),
         'success_booking': (context) => const AppointmentBooked(),

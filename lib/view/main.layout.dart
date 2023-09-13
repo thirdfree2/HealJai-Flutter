@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/view/screens/appoinment_page.dart';
 import 'package:flutter_application_1/view/screens/home_page.dart';
+import 'package:flutter_application_1/view/screens/homefix_page.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MainView extends StatefulWidget {
@@ -26,7 +27,7 @@ class _MainViewState extends State<MainView> {
           });
         }),
         children: const <Widget>[
-          HomePage(),
+          HomePagefix(),
           AppointmentPage(),
         ],
       ),

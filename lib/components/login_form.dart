@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../utils/config.dart';
 import '../view/screens/home_page.dart';
+import '../view/screens/homefix_page.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -51,7 +52,7 @@ class _LoginFormState extends State<LoginForm> {
       Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => HomePage(token: myToken),
+            builder: (context) => HomePagefix(token: myToken),
           ));
     } else {
       print('Something went wrong');

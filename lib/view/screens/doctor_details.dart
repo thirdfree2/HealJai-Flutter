@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/components/button.dart';
 import 'package:flutter_application_1/components/custom_appbar.dart';
+import 'package:flutter_application_1/view/screens/booking_page.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../utils/config.dart';
@@ -43,9 +44,13 @@ class _DoctorDetailsState extends State<DoctorDetails> {
               padding: const EdgeInsets.all(20),
               child: Button(
                 width: double.infinity,
-                title: 'Start Chating',
+                title: 'Start Booking',
                 onPressed: () {
-                  Navigator.of(context).pushNamed('chat_page');
+                  Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => BookingPage(),
+                              ));
                 },
                 disable: false,
               ),
