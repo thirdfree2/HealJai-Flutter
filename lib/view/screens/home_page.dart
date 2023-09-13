@@ -5,9 +5,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
+import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  final token;
+  const HomePage({@required this.token, Key? key}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -16,14 +19,18 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List<dynamic> psychologistList = [];
 
+  late String email;
+
   @override
   void initState() {
     super.initState();
     fetchPsychologists();
+    Map<String, dynamic> jwtDecodedToken = JwtDecoder.decode(widget.token);
+    email = jwtDecodedToken['email'];
   }
 
   Future<void> fetchPsychologists() async {
-    final apiUrl = 'http://10.1.203.91:3000/getpsychonist';
+    final apiUrl = 'http://10.1.205.49:3000/getpsychonist/get';
 
     final response = await http.get(Uri.parse(apiUrl));
 
@@ -80,7 +87,7 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Text(
-                  'Jessi',
+                  email,
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
