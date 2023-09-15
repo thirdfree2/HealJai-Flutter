@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> fetchPsychologists() async {
-    final apiUrl = 'http://10.1.205.49:3000/getpsychonist/get';
+    final apiUrl = 'http://10.1.203.91:3000/getpsychonist';
 
     final response = await http.get(Uri.parse(apiUrl));
 
