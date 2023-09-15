@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/components/button.dart';
 import 'package:lottie/lottie.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class AppointmentBooked extends StatefulWidget {
   final docname;
@@ -16,23 +18,58 @@ class AppointmentBooked extends StatefulWidget {
 }
 
 class _AppointmentBookedState extends State<AppointmentBooked> {
+  Future<void> sendBookingData(
+    String email,
+    String doc,
+    String payment,
+    String date,
+    String time,
+  ) async {
+    final apiUrl = Uri.parse('http://10.1.205.49:3000/user/paymentrequest'); // เปลี่ยน YOUR_API_URL เป็น URL ของ API ของคุณ
+    final response = await http.post(
+      apiUrl,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'email': email,
+        'doc': doc,
+        'payment': payment,
+        'date': date,
+        'time': time,
+      }),
+    );
+
+    if (response.statusCode == 201) {
+      print('Booking successful');
+    } else {
+      print('Booking failed');
+      print('Error message: ${response.body}');
+    }
+  }
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     debugPrint('Doctor Details Page - Docname: ${widget.docname}');
     debugPrint('Doctor Details Page - User: ${widget.user}');
     debugPrint('Doctor Details Page - Date: ${widget.date}');
     debugPrint('Doctor Details Page - Time: ${widget.time}');
     debugPrint('Doctor Details Page - Payment: ${widget.payment}');
-  }
 
+    // เรียกใช้งานฟังก์ชัน sendBookingData เพื่อส่งข้อมูลการจองไปยัง API
+    sendBookingData(
+      widget.user,   // แทนที่ด้วยข้อมูลผู้ใช้จริง
+      widget.docname,  // แทนที่ด้วยชื่อแพทย์จริง
+      widget.payment,  // แทนที่ด้วยข้อมูลการชำระเงินจริง
+      widget.date,     // แทนที่ด้วยวันที่จริง
+      widget.time,     // แทนที่ด้วยเวลาจริง
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SafeArea(
-      child: Column(
+      body: SafeArea(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Expanded(
@@ -59,7 +96,9 @@ class _AppointmentBookedState extends State<AppointmentBooked> {
                 disable: false,
               ),
             ),
-          ]),
-    ));
+          ],
+        ),
+      ),
+    );
   }
 }
