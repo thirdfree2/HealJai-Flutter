@@ -1,28 +1,48 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/components/button.dart';
 import 'package:flutter_application_1/components/custom_appbar.dart';
+import 'package:flutter_application_1/view/screens/payment.dart';
+import 'package:flutter_application_1/view/screens/success_booked.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../../utils/config.dart';
 
 class BookingPage extends StatefulWidget {
-  const BookingPage({super.key});
+  final user;
+  final docname;
+  const BookingPage({@required this.docname, this.user, Key? key});
 
   @override
   State<BookingPage> createState() => _BookingPageState();
 }
 
 class _BookingPageState extends State<BookingPage> {
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  DateTime? selectedDate;
+  String? selectedTime;
+
   CalendarFormat _format = CalendarFormat.month;
   DateTime _focusDay = DateTime.now();
   DateTime _currentDay = DateTime.now();
+
   int? _currentIndex;
   bool _isWeekend = false;
   bool _dateSelected = false;
   bool _timeSelected = false;
   @override
   Widget build(BuildContext context) {
+    String? selectedDateInIsoFormat =
+        selectedDate?.toIso8601String().split("T")[0];
+    final docname = widget.docname;
+    final user = widget.user;
+    final date = selectedDateInIsoFormat;
+    final time = selectedTime;
+
     return Scaffold(
       appBar: CustomAppBar(
         appTitle: 'Appointment',
@@ -74,6 +94,10 @@ class _BookingPageState extends State<BookingPage> {
                             _currentIndex = index;
                             _timeSelected = true;
                           });
+
+                          // เก็บเวลาที่เลือกลงในตัวแปร selectedTime
+                          selectedTime =
+                              '${index + 9}:00 ${index + 9 > 11 ? "PM" : "AM"}';
                         },
                         child: Container(
                           margin: const EdgeInsets.all(5),
@@ -109,9 +133,18 @@ class _BookingPageState extends State<BookingPage> {
               padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 80),
               child: Button(
                   width: double.infinity,
-                  title: 'Make Appoint-ment',
+                  title: 'Make Appoint-ment and Payment',
                   onPressed: () {
-                    Navigator.of(context).pushNamed('success_booking');
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Payment(
+                            time: time,
+                            date: date,
+                            docname: widget.docname,
+                            user: widget.user,
+                          ),
+                        ));
                   },
                   disable: _timeSelected && _dateSelected ? false : true),
             ),
@@ -154,6 +187,10 @@ class _BookingPageState extends State<BookingPage> {
             _isWeekend = false;
           }
         });
+
+        // เก็บวันที่ที่เลือกลงในตัวแปร selectedDate
+        selectedDate =
+            DateTime(selectedDay.year, selectedDay.month, selectedDay.day);
       }),
     );
   }

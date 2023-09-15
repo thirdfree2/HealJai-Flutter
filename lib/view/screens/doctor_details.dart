@@ -7,7 +7,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../utils/config.dart';
 
 class DoctorDetails extends StatefulWidget {
-  const DoctorDetails({super.key});
+  final user;
+  final docname;
+  const DoctorDetails({@required this.docname, this.user, Key? key})
+      : super(key: key);
 
   @override
   State<DoctorDetails> createState() => _DoctorDetailsState();
@@ -15,8 +18,15 @@ class DoctorDetails extends StatefulWidget {
 
 class _DoctorDetailsState extends State<DoctorDetails> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
   bool isFav = false;
   Widget build(BuildContext context) {
+    final docname = widget.docname;
     return Scaffold(
       appBar: CustomAppBar(
         appTitle: 'Doctor Details',
@@ -40,6 +50,7 @@ class _DoctorDetailsState extends State<DoctorDetails> {
           children: <Widget>[
             Config.spaceSmall,
             const Spacer(),
+            AboutDoctor(docname: docname),
             Padding(
               padding: const EdgeInsets.all(20),
               child: Button(
@@ -47,10 +58,13 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                 title: 'Start Booking',
                 onPressed: () {
                   Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => BookingPage(),
-                              ));
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => BookingPage(
+                          docname: widget.docname,
+                          user: widget.user,
+                        ),
+                      ));
                 },
                 disable: false,
               ),
@@ -63,7 +77,9 @@ class _DoctorDetailsState extends State<DoctorDetails> {
 }
 
 class AboutDoctor extends StatelessWidget {
-  const AboutDoctor({super.key});
+  final String docname; // เพิ่มตัวแปร docname
+
+  const AboutDoctor({Key? key, required this.docname}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -78,8 +94,8 @@ class AboutDoctor extends StatelessWidget {
             backgroundColor: Colors.white,
           ),
           Config.spaceMedium,
-          const Text(
-            'Dr Richard Tan',
+          Text(
+            '$docname',
             style: TextStyle(
               color: Colors.black,
               fontSize: 24.0,

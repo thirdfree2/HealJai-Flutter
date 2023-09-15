@@ -17,6 +17,7 @@ class _HomePagefixState extends State<HomePagefix> {
   late String email;
   List<dynamic> psychologistList = [];
   List<dynamic> appointmentTodayList = [];
+  final dummy_email = 'AC_DC';
 
   @override
   void initState() {
@@ -217,7 +218,10 @@ class _HomePagefixState extends State<HomePagefix> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => DoctorDetails(),
+                                builder: (context) => DoctorDetails(
+                                  docname: name,
+                                  user: dummy_email,
+                                ),
                               ));
                         },
                         leading: FlutterLogo(size: 72.0),
