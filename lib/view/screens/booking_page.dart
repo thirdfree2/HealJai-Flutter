@@ -5,13 +5,15 @@ import 'package:flutter_application_1/view/screens/payment.dart';
 import 'package:flutter_application_1/view/screens/success_booked.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:flutter_application_1/utils/api_url.dart';
 
 import '../../utils/config.dart';
 
 class BookingPage extends StatefulWidget {
-  final user;
-  final docname;
-  const BookingPage({@required this.docname, this.user, Key? key});
+  
+  const BookingPage({ Key? key});
 
   @override
   State<BookingPage> createState() => _BookingPageState();
@@ -19,9 +21,30 @@ class BookingPage extends StatefulWidget {
 
 class _BookingPageState extends State<BookingPage> {
   void initState() {
-    // TODO: implement initState
     super.initState();
+    fetchAppointments();
   }
+
+  // Replace with your API URL
+
+  Future<List<dynamic>> fetchAppointments() async {
+    final path = ApiUrls.localhost;
+    final doc = "dummy";
+    String apiUrl = '$path/getappointment/appoint/$doc';
+    final response = await http.get(Uri.parse(apiUrl));
+
+    if (response.statusCode == 200) {
+      // If the server returns a 200 OK response, parse the JSON data
+      final jsonData = json.decode(response.body);
+      print('API Response: $jsonData'); // Log the API response
+      return jsonData['data'];
+    } else {
+      // If the server did not return a 200 OK response, throw an exception
+      print('API Error: ${response.statusCode} - ${response.reasonPhrase}');
+      throw Exception('Failed to load appointments');
+    }
+  }
+
 
   DateTime? selectedDate;
   String? selectedTime;
@@ -38,8 +61,7 @@ class _BookingPageState extends State<BookingPage> {
   Widget build(BuildContext context) {
     String? selectedDateInIsoFormat =
         selectedDate?.toIso8601String().split("T")[0];
-    final docname = widget.docname;
-    final user = widget.user;
+
     final date = selectedDateInIsoFormat;
     final time = selectedTime;
 
@@ -138,11 +160,7 @@ class _BookingPageState extends State<BookingPage> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => Payment(
-                            time: time,
-                            date: date,
-                            docname: widget.docname,
-                            user: widget.user,
+                          builder: (context) => Payment(                    
                           ),
                         ));
                   },

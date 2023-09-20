@@ -5,6 +5,7 @@ import 'package:flutter_application_1/view/main.layout.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_application_1/utils/api_url.dart';
 
 import '../utils/config.dart';
 import '../view/screens/home_page.dart';
@@ -36,7 +37,8 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   void loginUser() async {
-  final api1Url = 'http://10.1.205.49:3000/user/login';
+    final path = ApiUrls.localhost;
+  final api1Url = '$path/user/login';
   if (_emailController.text.isNotEmpty && _passController.text.isNotEmpty) {
     var regBody = {
       "user_email": _emailController.text, // ดึงค่าจาก _emailController

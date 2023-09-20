@@ -45,11 +45,13 @@ dependencies:
   fluttertoast: ^8.2.2
   zego_uikit_prebuilt_call: ^3.11.1
   font_awesome_flutter: ^10.5.0
-  table_calendar: ^3.0.9
   lottie: ^2.6.0
   dart_jsonwebtoken: ^2.11.0
   shared_preferences: ^2.2.1
   jwt_decoder: ^2.0.1
+  table_calendar: ^3.0.9
+  image_picker: ^0.8.4
+  image: ^3.0.1
 
 dev_dependencies:
   flutter_test:

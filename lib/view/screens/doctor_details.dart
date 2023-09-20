@@ -2,14 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/components/button.dart';
 import 'package:flutter_application_1/components/custom_appbar.dart';
 import 'package:flutter_application_1/view/screens/booking_page.dart';
+import 'package:flutter_application_1/view/screens/calendarfix.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:flutter_application_1/utils/api_url.dart';
 
 import '../../utils/config.dart';
 
 class DoctorDetails extends StatefulWidget {
-  final user;
-  final docname;
-  const DoctorDetails({@required this.docname, this.user, Key? key})
+  final int user_id;
+  final psychologist_id;
+  final psychologist_name;
+  final status;
+  const DoctorDetails(
+      {@required this.psychologist_id,
+      this.user_id = 0,
+      this.psychologist_name,
+      this.status,
+      Key? key})
       : super(key: key);
 
   @override
@@ -21,12 +32,14 @@ class _DoctorDetailsState extends State<DoctorDetails> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    debugPrint('Doctor Details Page - Docname: ${widget.psychologist_id}');
+    debugPrint('Doctor Details Page - User_id: ${widget.user_id}');
   }
 
   @override
   bool isFav = false;
   Widget build(BuildContext context) {
-    final docname = widget.docname;
+    final docname = widget.psychologist_id;
     return Scaffold(
       appBar: CustomAppBar(
         appTitle: 'Doctor Details',
@@ -50,25 +63,45 @@ class _DoctorDetailsState extends State<DoctorDetails> {
           children: <Widget>[
             Config.spaceSmall,
             const Spacer(),
-            AboutDoctor(docname: docname),
+            AboutDoctor(docname: widget.psychologist_name),
             Padding(
               padding: const EdgeInsets.all(20),
               child: Button(
                 width: double.infinity,
                 title: 'Start Booking',
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => BookingPage(
-                          docname: widget.docname,
-                          user: widget.user,
-                        ),
-                      ));
+                  if (widget.status != 'In Appointment') {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => BookingPagefix(
+                            psychologist_id: widget.psychologist_id,
+                            user_id: widget.user_id,
+                          ),
+                        ));
+                  } else {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Text('You have Appointmented'),
+                            actions: <Widget>[
+                              Button(
+                                width: 100,
+                                title: 'Exit',
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                disable: false,
+                              )
+                            ],
+                          );
+                        });
+                  }
                 },
                 disable: false,
               ),
-            )
+            ),
           ],
         ),
       ),

@@ -4,6 +4,7 @@ import 'package:flutter_application_1/view/screens/doctor_details.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:flutter_application_1/utils/config.dart';
 import 'dart:convert';
+import 'package:flutter_application_1/utils/api_url.dart';
 import 'package:http/http.dart' as http;
 
 class HomePagefix extends StatefulWidget {
@@ -15,22 +16,27 @@ class HomePagefix extends StatefulWidget {
 
 class _HomePagefixState extends State<HomePagefix> {
   late String email;
+  late int id;
+  late String name;
+
   List<dynamic> psychologistList = [];
   List<dynamic> appointmentTodayList = [];
-  final dummy_email = 'AC_DC';
+  final dummy_status = 'None';
 
   @override
   void initState() {
     super.initState();
+    Map<String, dynamic> jwtDecodedToken = JwtDecoder.decode(widget.token);
+    email = jwtDecodedToken['email'];
+    name = jwtDecodedToken['name'];
+    id = jwtDecodedToken['id'];
     fetchPsychologists();
     fetchAppointment();
-    // Map<String, dynamic> jwtDecodedToken = JwtDecoder.decode(widget.token);
-    // email = jwtDecodedToken['email'];
   }
 
   Future<void> fetchAppointment() async {
-    final dummy_email = 'AC_DC';
-    final apiUrl = 'http://10.1.205.49:3000/getappointment/get/$dummy_email';
+    final path = ApiUrls.localhost;
+    final apiUrl = '$path/appointment/get/$id';
     final response = await http.get(Uri.parse(apiUrl));
 
     if (response.statusCode == 200) {
@@ -46,7 +52,8 @@ class _HomePagefixState extends State<HomePagefix> {
   }
 
   Future<void> fetchPsychologists() async {
-    final apiUrl = 'http://10.1.205.49:3000/getpsychonist/get';
+    final path = ApiUrls.localhost;
+    final apiUrl = '$path/psychonist/get';
 
     final response = await http.get(Uri.parse(apiUrl));
 
@@ -68,8 +75,8 @@ class _HomePagefixState extends State<HomePagefix> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Profile Page',
-          style: TextStyle(fontSize: 30),
+          "$name",
+          style: TextStyle(fontSize: 28),
         ),
         actions: [
           Padding(
@@ -126,9 +133,15 @@ class _HomePagefixState extends State<HomePagefix> {
             shrinkWrap: true,
             itemCount: appointmentTodayList.length,
             itemBuilder: (BuildContext context, int index) {
+              if (appointmentTodayList.isEmpty) {
+                return Center(
+                  child: Text("Appointment Not Found"),
+                );
+              }
               final appointmentToday = appointmentTodayList[index];
-              final doc_name = appointmentToday['doc_name'];
-              final appoint_time = appointmentToday['appoint_time'];
+              final int doc_name = appointmentToday['id'];
+              final appoint_time = appointmentToday['psychonist_appointments_id'];
+              final status = appointmentToday['status'];
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Center(
@@ -150,20 +163,24 @@ class _HomePagefixState extends State<HomePagefix> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text(
-                                        '$doc_name',
-                                        style: TextStyle(
-                                            fontSize: 30,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      IconButton(
-                                        icon: Transform.scale(
-                                          scale: 1.2,
-                                          child: Icon(Icons.settings),
+                                      Container(
+                                        child: Text(
+                                          'Appointments id : $doc_name',
+                                          style: TextStyle(
+                                              fontSize: 19,
+                                              fontWeight: FontWeight.bold),
                                         ),
-                                        onPressed: () {
-                                          // กระทำเมื่อไอคอนถูกคลิก
-                                        },
+                                      ),
+                                      Container(
+                                        child: IconButton(
+                                          icon: Transform.scale(
+                                            scale: 1.2,
+                                            child: Icon(Icons.settings),
+                                          ),
+                                          onPressed: () {
+                                            // กระทำเมื่อไอคอนถูกคลิก
+                                          },
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -172,7 +189,7 @@ class _HomePagefixState extends State<HomePagefix> {
                             ),
                             subtitle: Padding(
                               padding: const EdgeInsets.only(top: 5),
-                              child: Text('$appoint_time'),
+                              child: Text('Appointment details : $appoint_time'),
                             ),
                             isThreeLine: true,
                           ),
@@ -207,8 +224,15 @@ class _HomePagefixState extends State<HomePagefix> {
               shrinkWrap: true,
               itemCount: psychologistList.length,
               itemBuilder: (BuildContext context, int index) {
+                if (psychologistList.isEmpty) {
+                  return Center(
+                    child: Text("Psychologist Not Found"),
+                  );
+                }
                 final psychologist = psychologistList[index];
-                final name = psychologist['doc_username'];
+                final psychologist_name = psychologist['psychologist_username'];
+                final psychologist_id = psychologist['id'];
+                final docemail = psychologist['psychologist_email'];
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Center(
@@ -219,13 +243,15 @@ class _HomePagefixState extends State<HomePagefix> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => DoctorDetails(
-                                  docname: name,
-                                  user: dummy_email,
+                                  psychologist_name: psychologist_name,
+                                  psychologist_id: psychologist_id,
+                                  user_id: id,
+                                  status: dummy_status,
                                 ),
                               ));
                         },
                         leading: FlutterLogo(size: 72.0),
-                        title: Text('$name'),
+                        title: Text('$psychologist_name'),
                         subtitle: Text(
                             'A sufficiently long subtitle warrants three lines.'),
                         isThreeLine: true,
