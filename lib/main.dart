@@ -13,16 +13,34 @@ import 'package:flutter_application_1/view/screens/register_page.dart';
 import 'package:flutter_application_1/view/screens/success_booked.dart';
 import 'package:flutter_application_1/view/splash.view.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
-  runApp(App());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  runApp(App(token: prefs.getString('token'),));
 }
 
 class App extends StatelessWidget {
-  const App({Key? key}) : super(key: key);
+
+  final token;
+  const App({@required this.token, Key? key}) : super(key: key);
   static final navigatorKey = GlobalKey<NavigatorState>();
+  bool isUserAuthenticated() {
+    if (token != null) {
+      // Decode and verify the token here, and check for expiration
+      // If the token is valid, return true; otherwise, return false.
+      // You can use packages like 'jwt_decoder' for token decoding.
+      // Example:
+      // final bool tokenIsValid = validateToken(token);
+      // return tokenIsValid;
+    }
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
+    final bool isAuthenticated = isUserAuthenticated();
     return GetMaterialApp(
       navigatorKey: navigatorKey,
       title: 'Flutter Doctor App',
@@ -50,11 +68,11 @@ class App extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        // '/': (context) => const SplashView(),
-        // '/': (context) => const HomePagefix(),
+        '/': (context) => const SplashView(),
+        'main': (context) => isAuthenticated ? HomePagefix(token: token) : AuthPage(),
         'auth': (context) => const AuthPage(),
         'register': (context) => const RigisterPage(),
-        '/': (context) => const MainView(),
+        // 'main': (context) => const MainView(),
         'doc_details': (context) => const DoctorDetails(),
         'booking_page': (context) => const BookingPage(),
         'success_booking': (context) => const AppointmentBooked(),

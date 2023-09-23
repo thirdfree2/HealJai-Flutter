@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/utils/global.colors.dart';
 
 class Config {
+
+
   static MediaQueryData? mediaQueryData;
   static double? screenWidth;
   static double? screenHeight;
