@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/components/login_form.dart';
 import 'package:flutter_application_1/utils/config.dart';
 
-class AuthPage extends StatefulWidget {
-  const AuthPage({super.key});
+class PsyAuthPage extends StatefulWidget {
+  const PsyAuthPage({super.key});
 
   @override
-  State<AuthPage> createState() => _AuthPageState();
+  State<PsyAuthPage> createState() => _PsyAuthPageState();
 }
 
-class _AuthPageState extends State<AuthPage> {
+class _PsyAuthPageState extends State<PsyAuthPage> {
+  final role = 'psy';
   @override
   Widget build(BuildContext context) {
-    final role = 'user';
     Config().init(context);
     return Scaffold(
       body: Padding(
@@ -26,7 +26,7 @@ class _AuthPageState extends State<AuthPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                'Welcome',
+                'Welcome, Psycologist',
                 style: const TextStyle(
                   fontSize: 36,
                   fontWeight: FontWeight.bold,
@@ -61,7 +61,7 @@ class _AuthPageState extends State<AuthPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    'Don\'t have an account?',
+                    'Back to user UI',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.normal,
@@ -70,10 +70,10 @@ class _AuthPageState extends State<AuthPage> {
                   ),
                   InkWell(
                     onTap: () {
-                      Navigator.of(context).pushNamed('register');
+                      Navigator.of(context).pushNamed('auth');
                     },
                     child: Text(
-                      ' Sign Up',
+                      ' Click',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -82,7 +82,7 @@ class _AuthPageState extends State<AuthPage> {
                     ),
                   ),
                 ],
-              ),
+              )
             ],
           ),
         ),

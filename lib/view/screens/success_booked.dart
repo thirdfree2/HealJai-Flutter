@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/components/button.dart';
+import 'package:flutter_application_1/components/loading.dart';
+import 'package:flutter_application_1/view/splash.view.dart';
+import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter_application_1/utils/api_url.dart';
 
+import '../main.layout.dart';
+
 class AppointmentBooked extends StatefulWidget {
+  final token;
   final payment;
   final psychonist_appointments_id;
   final user_id;
   final image;
   const AppointmentBooked(
-      {@required this.user_id,
+      {@required this.token,
+      this.user_id,
       this.image,
       this.psychonist_appointments_id,
       this.payment,
@@ -84,7 +91,17 @@ class _AppointmentBookedState extends State<AppointmentBooked> {
               child: Button(
                 width: double.infinity,
                 title: 'Back to Home Page',
-                onPressed: () => Navigator.of(context).pushNamed('/'),
+                onPressed: () => {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => LoadingView(
+                        roleId: 1,
+                        token: widget.token,
+                      ), // หรือใช้หน้าปลายทางที่คุณสร้าง
+                    ),
+                  ),
+                },
                 disable: false,
               ),
             ),

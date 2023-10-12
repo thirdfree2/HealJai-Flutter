@@ -12,8 +12,9 @@ import 'package:flutter_application_1/utils/api_url.dart';
 import '../../utils/config.dart';
 
 class BookingPage extends StatefulWidget {
+  final token;
   
-  const BookingPage({ Key? key});
+  const BookingPage({@required this.token, Key? key}) : super(key: key);
 
   @override
   State<BookingPage> createState() => _BookingPageState();

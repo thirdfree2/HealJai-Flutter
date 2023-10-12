@@ -11,12 +11,14 @@ import 'package:flutter_application_1/utils/api_url.dart';
 import '../../utils/config.dart';
 
 class DoctorDetails extends StatefulWidget {
+  final token;
   final int user_id;
   final psychologist_id;
   final psychologist_name;
   final status;
   const DoctorDetails(
       {@required this.psychologist_id,
+      this.token,
       this.user_id = 0,
       this.psychologist_name,
       this.status,
@@ -34,6 +36,7 @@ class _DoctorDetailsState extends State<DoctorDetails> {
     super.initState();
     debugPrint('Doctor Details Page - Docname: ${widget.psychologist_id}');
     debugPrint('Doctor Details Page - User_id: ${widget.user_id}');
+    debugPrint('Doctor Details Page - token: ${widget.token}');
   }
 
   @override
@@ -77,6 +80,7 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                           builder: (context) => BookingPagefix(
                             psychologist_id: widget.psychologist_id,
                             user_id: widget.user_id,
+                            token: widget.token,
                           ),
                         ));
                   } else {

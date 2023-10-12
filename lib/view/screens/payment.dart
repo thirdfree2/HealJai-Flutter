@@ -8,11 +8,14 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
 class Payment extends StatefulWidget {
+  final token;
   final int psychonist_appointments_id;
   final int user_id;
 
   Payment(
-      {@required this.user_id = 0,
+      {@required 
+      this.token,
+      this.user_id = 0,
       this.psychonist_appointments_id = 0,
       Key? key})
       : super(key: key);
@@ -35,8 +38,9 @@ class _PaymentState extends State<Payment> {
       final path = ApiUrls.localhost;
       final apiUrl = '$path/user/paymentrequest';
       var request = http.MultipartRequest('POST', Uri.parse(apiUrl));
-      request.fields['psychonist_appointments_id'] = widget.psychonist_appointments_id.toString() ;
-      request.fields['user_id'] = widget.user_id.toString() ;
+      request.fields['psychonist_appointments_id'] =
+          widget.psychonist_appointments_id.toString();
+      request.fields['user_id'] = widget.user_id.toString();
 
       if (_image != null) {
         var imageFile = await http.MultipartFile.fromPath('slip', _image!.path);
@@ -50,7 +54,7 @@ class _PaymentState extends State<Payment> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => AppointmentBooked(),
+            builder: (context) => AppointmentBooked(token: widget.token),
           ),
         );
       } else {
