@@ -92,15 +92,7 @@ class _AppointmentBookedState extends State<AppointmentBooked> {
                 width: double.infinity,
                 title: 'Back to Home Page',
                 onPressed: () => {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => LoadingView(
-                        roleId: 1,
-                        token: widget.token,
-                      ), // หรือใช้หน้าปลายทางที่คุณสร้าง
-                    ),
-                  ),
+                  Get.offAll(MainView(token: widget.token))
                 },
                 disable: false,
               ),

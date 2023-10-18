@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/components/own_card.dart';
 import 'package:flutter_application_1/components/reply_card.dart';
 import 'package:flutter_application_1/models/MessageModel.dart';
+import 'package:flutter_application_1/view/call.view.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:provider/provider.dart';
 import '../../components/custom_appbar.dart';
@@ -68,7 +70,9 @@ class _ChatdocScreenState extends State<ChatdocScreen> {
 
   void setMessage(String type, String message) {
     MessageModel messageModel = MessageModel(
-        message: message, type: type, time: DateTime.now().toString().substring(10,16));
+        message: message,
+        type: type,
+        time: DateTime.now().toString().substring(10, 16));
     setState(() {
       messages.add(messageModel);
     });
@@ -79,6 +83,14 @@ class _ChatdocScreenState extends State<ChatdocScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(email),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.phone), // ใช้ไอคอนโทรศัพท์
+            onPressed: () {
+              Get.to(Callvideo(userName: name,userID: id.toString(),));
+            },
+          ),
+        ],
       ),
       body: Container(
         child: Column(
