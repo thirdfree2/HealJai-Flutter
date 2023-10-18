@@ -241,8 +241,8 @@ class _HomePagefixState extends State<HomePagefix> {
                   );
                 }
                 final psychologist = psychologistList[index];
-                final psychologist_name = psychologist['user_name'];
-                final psychologist_id = psychologist['id'];
+                final psychologist_name = psychologist['UserName'];
+                final psychologist_id = psychologist['UserID'];
                 final address = psychologist['address'];
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),

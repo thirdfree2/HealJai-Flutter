@@ -70,7 +70,6 @@ class App extends StatelessWidget {
         'booking_page': (context) => const BookingPage(),
         'success_booking': (context) => const AppointmentBooked(),
         'chatpage': (context) => ChatdocScreen(token: token),
-        'videocall': (context) => const Callvideo(),
       },
     );
   }
