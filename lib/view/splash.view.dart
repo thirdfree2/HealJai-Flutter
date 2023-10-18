@@ -28,7 +28,7 @@ class _SplashViewState extends State<SplashView> {
       () {
         if (widget.token != null) {
           var decodedToken = JwtDecoder.decode(widget.token!);
-          if (decodedToken['role_id'] == 1) {
+          if (decodedToken['role_id'] == 3) {
             Get.offAll(MainView(token: widget.token));
           } else if (decodedToken['role_id'] == 2) {
             Get.offAll(PsyMain(token: widget.token));

@@ -43,8 +43,8 @@ class _LoginFormState extends State<LoginForm> {
     final api1Url = '$path/user/login';
     if (_emailController.text.isNotEmpty && _passController.text.isNotEmpty) {
       var regBody = {
-        "user_email": _emailController.text,
-        "user_password": _passController.text,
+        "Email": _emailController.text,
+        "Password": _passController.text,
       };
       var response = await http.post(Uri.parse(api1Url),
           headers: {"Content-Type": "application/json"},
@@ -53,10 +53,10 @@ class _LoginFormState extends State<LoginForm> {
       if (jsonResponse['status']) {
         var myToken = jsonResponse['token'];
         var decodedToken = JwtDecoder.decode(myToken);
-        if (decodedToken['role_id'] == 1) {
+        if (decodedToken['role_id'] == 3) {
           Get.to(LoadingView(
             token: myToken,
-            roleId: 1,
+            roleId: 3,
           ));
         } else if (decodedToken['role_id'] == 2) {
           Get.to(LoadingView(

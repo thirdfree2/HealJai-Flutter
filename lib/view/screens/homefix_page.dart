@@ -208,7 +208,7 @@ class _HomePagefixState extends State<HomePagefix> {
                                 width: 300,
                                 title: 'Start Chat',
                                 onPressed: () => {
-                                      Get.to(ChatdocScreen(token: widget.token,chat_id: chat_id, target_id: target_id,))
+                                      Get.to(ChatdocScreen(token: widget.token,sourceId: id,target_id: target_id,))
                                     },
                                 disable: false),
                           ),

@@ -209,6 +209,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.3.1"
+  email_otp:
+    dependency: "direct main"
+    description:
+      name: email_otp
+      sha256: cd1c90824f4da83764d8d0fdadcb152e4b4236102f3334f4753fc7f3d53a910b
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.1"
   encrypt:
     dependency: transitive
     description:

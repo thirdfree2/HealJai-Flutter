@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/components/button.dart';
+import 'package:flutter_application_1/view/screens/otp_page.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
+import 'package:email_otp/email_otp.dart';
 
 import '../utils/config.dart';
 
@@ -21,23 +23,12 @@ class _SignUpFormState extends State<SignUpForm> {
   final _passController = TextEditingController();
   final _phoneController = TextEditingController();
   final _confirmpassController = TextEditingController();
+  final _firstNameController = TextEditingController();
+  final _lastNameController = TextEditingController();
+  final _birthdayController = TextEditingController();
   bool obsecuerPass = true;
 
-  Future sign_up() async {
-    String url = "http://10.1.205.31/my_project_backend/register.php";
-    final response = await http.post(Uri.parse(url), body: {
-      'user_name': _usernameController.text,
-      'user_password': _passController.text,
-      'user_email': _emailController.text,
-      'user_phone': _phoneController.text,
-    });
-    var data = json.decode(response.body);
-    if (data == "Error") {
-      Navigator.pushNamed(context, 'register');
-    } else {
-      Navigator.pushNamed(context, 'auth');
-    }
-  }
+  EmailOTP myauth = EmailOTP();
 
   @override
   Widget build(BuildContext context) {
@@ -82,6 +73,32 @@ class _SignUpFormState extends State<SignUpForm> {
               }
               return null;
             },
+          ),
+          Config.spaceSmall,
+          TextFormField(
+            controller: _firstNameController,
+            keyboardType: TextInputType.emailAddress,
+            cursorColor: Config.primaryColor,
+            decoration: const InputDecoration(
+              hintText: 'First Name',
+              labelText: 'First Name',
+              alignLabelWithHint: true,
+              prefixIcon: Icon(Icons.person_2),
+              prefixIconColor: Config.primaryColor,
+            ),
+          ),
+          Config.spaceSmall,
+          TextFormField(
+            controller: _lastNameController,
+            keyboardType: TextInputType.emailAddress,
+            cursorColor: Config.primaryColor,
+            decoration: const InputDecoration(
+              hintText: 'Last Name',
+              labelText: 'Last Name',
+              alignLabelWithHint: true,
+              prefixIcon: Icon(Icons.person_2),
+              prefixIconColor: Config.primaryColor,
+            ),
           ),
           Config.spaceSmall,
           TextFormField(
@@ -167,16 +184,61 @@ class _SignUpFormState extends State<SignUpForm> {
             },
           ),
           Config.spaceSmall,
+          TextFormField(
+            controller: _birthdayController,
+            keyboardType: TextInputType.emailAddress,
+            cursorColor: Config.primaryColor,
+            decoration: const InputDecoration(
+              hintText: 'YYYY-MM-DD',
+              labelText: 'BirthDay',
+              alignLabelWithHint: true,
+              prefixIcon: Icon(Icons.cake),
+              prefixIconColor: Config.primaryColor,
+            ),
+          ),
+          Config.spaceSmall,
           Button(
-              width: double.infinity,
-              title: 'Sign Up',
-              onPressed: () {
-                bool pass = _formKey.currentState!.validate();
-                if (pass) {
-                  sign_up();
+            width: double.infinity,
+            title: 'Sign Up',
+            onPressed: () async {
+              myauth.setConfig(
+                  appEmail: "me@rohitchouhan.com",
+                  appName: "Email OTP",
+                  userEmail: _emailController.text,
+                  otpLength: 6,
+                  otpType: OTPType.digitsOnly
+                  );
+              bool pass = _formKey.currentState!.validate();
+              if (pass) {
+                String userName = _usernameController.text;
+                String birthDay = _birthdayController.text;
+                String email = _emailController.text;
+                String firstName = _firstNameController.text;
+                String lastName = _lastNameController.text;
+                String password = _passController.text;
+                String tel = _phoneController.text;
+
+                if (userName != null &&
+                    birthDay != null &&
+                    email != null &&
+                    firstName != null &&
+                    lastName != null &&
+                    password != null &&
+                    tel != null) {
+                  Get.to(OTPVerify(
+                    userName: userName,
+                    birthDay: birthDay,
+                    email: email,
+                    firstName: firstName,
+                    lastName: lastName,
+                    password: password,
+                    tel: tel,
+                  ));
                 }
-              },
-              disable: false),
+              }
+            },
+            disable: false,
+          ),
         ],
       ),
     );

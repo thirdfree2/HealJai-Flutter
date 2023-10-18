@@ -55,7 +55,7 @@ class _LoadingViewState extends State<LoadingView> {
 
   void _redirectToPageBasedOnRoleId() {
     Timer(const Duration(seconds: 2), () {
-      if (widget.roleId == 1) {
+      if (widget.roleId == 3) {
         Get.offAll(MainView(token: widget.token));
       } else if (widget.roleId == 2) {
         Get.offAll(PsyMain(token: widget.token));

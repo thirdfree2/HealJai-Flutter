@@ -53,6 +53,7 @@ dependencies:
   table_calendar: ^3.0.9
   image_picker: ^0.8.4
   image: ^3.0.1
+  email_otp: ^2.0.1
 
 dev_dependencies:
   flutter_test:

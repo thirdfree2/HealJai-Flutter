@@ -11,11 +11,11 @@ import '../../utils/config.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class ChatdocScreen extends StatefulWidget {
-  final int chat_id;
+  final int sourceId;
   final int target_id;
   final token;
   const ChatdocScreen(
-      {@required this.token, this.chat_id = 0, this.target_id = 0, Key? key})
+      {@required this.token, this.sourceId = 0, this.target_id = 0, Key? key})
       : super(key: key);
 
   @override
@@ -30,6 +30,7 @@ class _ChatdocScreenState extends State<ChatdocScreen> {
   final TextEditingController _messageInputController = TextEditingController();
   final path = ApiUrls.chatpath;
   bool sendButton = false;
+  final ScrollController _scrollController = ScrollController();
   List<MessageModel> messages = [];
 
   @override
@@ -38,8 +39,7 @@ class _ChatdocScreenState extends State<ChatdocScreen> {
     email = jwtDecodedToken['email'];
     name = jwtDecodedToken['name'];
     id = jwtDecodedToken['id'];
-    debugPrint("Chat id : ${widget.chat_id}");
-    debugPrint("You id : ${id}");
+    debugPrint("You_id : ${widget.sourceId}");
     debugPrint("Target id : ${widget.target_id}");
     connect();
     super.initState();
@@ -51,7 +51,7 @@ class _ChatdocScreenState extends State<ChatdocScreen> {
       "autoConnect": false,
     });
     socket.connect();
-    socket.emit("signin", widget.chat_id);
+    socket.emit("signin", widget.sourceId);
     socket.onConnect((data) {
       print("Connected");
       socket.on("message",
@@ -67,7 +67,8 @@ class _ChatdocScreenState extends State<ChatdocScreen> {
   }
 
   void setMessage(String type, String message) {
-    MessageModel messageModel = MessageModel(message: message, type: type);
+    MessageModel messageModel = MessageModel(
+        message: message, type: type, time: DateTime.now().toString().substring(10,16));
     setState(() {
       messages.add(messageModel);
     });
@@ -80,18 +81,28 @@ class _ChatdocScreenState extends State<ChatdocScreen> {
         title: Text(email),
       ),
       body: Container(
-        child: Stack(
+        child: Column(
           children: [
-            Container(
-              height: MediaQuery.of(context).size.height - 180,
-              decoration: BoxDecoration(color: Colors.amber),
+            Expanded(
               child: ListView.builder(
-                itemCount: messages.length,
+                controller: _scrollController,
+                itemCount: messages.length + 1,
                 itemBuilder: (context, index) {
+                  if (index == messages.length) {
+                    return Container(
+                      height: 70,
+                    );
+                  }
                   if (messages[index].type == "source") {
-                    return OwenerCard();
+                    return OwenerCard(
+                      time: messages[index].time,
+                      msg: messages[index].message,
+                    );
                   } else {
-                    return ReplyCard();
+                    return ReplyCard(
+                      time: messages[index].time,
+                      msg: messages[index].message,
+                    );
                   }
                 },
                 shrinkWrap: true,
@@ -99,51 +110,67 @@ class _ChatdocScreenState extends State<ChatdocScreen> {
             ),
             Align(
               alignment: Alignment.bottomCenter,
-              child: Row(
-                children: [
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(left: 5, bottom: 5, right: 12),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.grey[
-                            200], // เปลี่ยนสีพื้นหลังของ Container ที่ครอบ Align
-                      ),
-                      width: MediaQuery.of(context).size.width - 80,
-                      child: TextFormField(
-                        controller: _messageInputController,
-                        onChanged: (value) {
-                          if (value.length > 0) {
-                            setState(() {
-                              sendButton = true;
-                            });
-                          } else {
-                            sendButton = false;
-                          }
-                        },
-                      ),
+              child: Container(
+                height: 70,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: 5, bottom: 5, right: 12),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.grey[
+                                  200], // เปลี่ยนสีพื้นหลังของ Container ที่ครอบ Align
+                            ),
+                            width: MediaQuery.of(context).size.width - 80,
+                            child: TextFormField(
+                              controller: _messageInputController,
+                              onChanged: (value) {
+                                if (value.length > 0) {
+                                  setState(() {
+                                    sendButton = true;
+                                  });
+                                } else {
+                                  sendButton = false;
+                                }
+                              },
+                            ),
+                          ),
+                        ),
+                        CircleAvatar(
+                          radius: 25,
+                          backgroundColor: Config.primaryColor,
+                          child: IconButton(
+                              onPressed: () {
+                                if (sendButton) {
+                                  _scrollController.animateTo(
+                                      _scrollController
+                                          .position.maxScrollExtent,
+                                      duration: Duration(milliseconds: 300),
+                                      curve: Curves.easeOut);
+                                  sendMessge(
+                                    _messageInputController.text,
+                                    widget.sourceId,
+                                    widget.target_id,
+                                  );
+                                  _messageInputController.clear();
+                                  setState(() {
+                                    sendButton = false;
+                                  });
+                                }
+                              },
+                              icon: Icon(
+                                sendButton ? Icons.send : Icons.mic,
+                                color: Colors.white,
+                              )),
+                        ),
+                      ],
                     ),
-                  ),
-                  CircleAvatar(
-                    radius: 25,
-                    backgroundColor: Config.primaryColor,
-                    child: IconButton(
-                        onPressed: () {
-                          if (sendButton) {
-                            sendMessge(
-                              _messageInputController.text,
-                              widget.chat_id,
-                              widget.target_id,
-                            );
-                            _messageInputController.clear();
-                          }
-                        },
-                        icon: Icon(
-                          sendButton ? Icons.send : Icons.mic,
-                          color: Colors.white,
-                        )),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ],
