@@ -7,11 +7,12 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_application_1/utils/api_url.dart';
 
 class BookingPagefix extends StatefulWidget {
+  final token;
   final int psychologist_id;
   final int user_id;
-  final int psychonist_appointments_id;
   const BookingPagefix(
-      {@required this.psychonist_appointments_id = 0,
+      {@required
+      this.token,
       this.user_id = 0,
       this.psychologist_id = 0,
       Key? key})
@@ -36,7 +37,7 @@ class _BookingPagefixState extends State<BookingPagefix> {
   Future<void> fetchData() async {
     final path = ApiUrls.localhost;
     final psychologist_id = widget.psychologist_id;
-    final apiUrl = '$path/psychonist/calendar/$psychologist_id';
+    final apiUrl = '$path/psychologist/calendar/$psychologist_id';
     final response = await http.get(Uri.parse(apiUrl));
 
     if (response.statusCode == 200) {
@@ -66,7 +67,7 @@ class _BookingPagefixState extends State<BookingPagefix> {
                 final isDateChanged = index == 0 ||
                     appointment['slot_date'] !=
                         appointments[index - 1]['slot_date'];
-                final isDisabled = appointment['status'] == -1;
+                final isDisabled = appointment['status'] == 1;
                 final isSelected = selectedAppointmentIndex == index;
 
                 return Column(
@@ -136,8 +137,8 @@ class _BookingPagefixState extends State<BookingPagefix> {
                                         appointments[selectedAppointmentIndex]
                                                 ['id']
                                             .toString()),
-                                    user_id:
-                                       widget.user_id,
+                                    user_id: widget.user_id,
+                                    token: widget.token,
                                   ),
                                 ));
                           },

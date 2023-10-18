@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/components/button.dart';
+import 'package:flutter_application_1/view/screens/chat_screen_page.dart';
 import 'package:flutter_application_1/view/screens/doctor_details.dart';
+import 'package:get/get.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:flutter_application_1/utils/config.dart';
 import 'dart:convert';
@@ -53,7 +55,7 @@ class _HomePagefixState extends State<HomePagefix> {
 
   Future<void> fetchPsychologists() async {
     final path = ApiUrls.localhost;
-    final apiUrl = '$path/psychonist/get';
+    final apiUrl = '$path/psychologist/get';
 
     final response = await http.get(Uri.parse(apiUrl));
 
@@ -139,8 +141,12 @@ class _HomePagefixState extends State<HomePagefix> {
                 );
               }
               final appointmentToday = appointmentTodayList[index];
-              final int doc_name = appointmentToday['id'];
-              final appoint_time = appointmentToday['psychonist_appointments_id'];
+              final chat_id = appointmentToday['psychologist_appointment_id'];
+              final target_id = appointmentToday['psychologist_id'];
+              final doc_name = appointmentToday['user_name'];
+              final psychologist_id = appointmentToday['psychologist_id'];
+              final appoint_time = appointmentToday['slot_time'];
+              final appoint_date = appointmentToday['slot_date'];
               final status = appointmentToday['status'];
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -165,7 +171,7 @@ class _HomePagefixState extends State<HomePagefix> {
                                     children: [
                                       Container(
                                         child: Text(
-                                          'Appointments id : $doc_name',
+                                          '$doc_name',
                                           style: TextStyle(
                                               fontSize: 19,
                                               fontWeight: FontWeight.bold),
@@ -177,9 +183,7 @@ class _HomePagefixState extends State<HomePagefix> {
                                             scale: 1.2,
                                             child: Icon(Icons.settings),
                                           ),
-                                          onPressed: () {
-                                            // กระทำเมื่อไอคอนถูกคลิก
-                                          },
+                                          onPressed: () {},
                                         ),
                                       ),
                                     ],
@@ -189,16 +193,23 @@ class _HomePagefixState extends State<HomePagefix> {
                             ),
                             subtitle: Padding(
                               padding: const EdgeInsets.only(top: 5),
-                              child: Text('Appointment details : $appoint_time'),
+                              child: Column(
+                                children: [
+                                  Text('Appointment Time : $appoint_time'),
+                                  Text('Date : $appoint_date'),
+                                ],
+                              ),
                             ),
                             isThreeLine: true,
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(top: 5),
+                            padding: EdgeInsets.only(top: 5),
                             child: Button(
                                 width: 300,
                                 title: 'Start Chat',
-                                onPressed: () => {},
+                                onPressed: () => {
+                                      Get.to(ChatdocScreen(token: widget.token,sourceId: id,target_id: target_id,))
+                                    },
                                 disable: false),
                           ),
                         ],
@@ -230,9 +241,9 @@ class _HomePagefixState extends State<HomePagefix> {
                   );
                 }
                 final psychologist = psychologistList[index];
-                final psychologist_name = psychologist['psychologist_username'];
+                final psychologist_name = psychologist['user_name'];
                 final psychologist_id = psychologist['id'];
-                final docemail = psychologist['psychologist_email'];
+                final address = psychologist['address'];
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Center(
@@ -247,13 +258,13 @@ class _HomePagefixState extends State<HomePagefix> {
                                   psychologist_id: psychologist_id,
                                   user_id: id,
                                   status: dummy_status,
+                                  token: widget.token,
                                 ),
                               ));
                         },
                         leading: FlutterLogo(size: 72.0),
                         title: Text('$psychologist_name'),
-                        subtitle: Text(
-                            'A sufficiently long subtitle warrants three lines.'),
+                        subtitle: Text('Address : $address'),
                         isThreeLine: true,
                       ),
                     ),

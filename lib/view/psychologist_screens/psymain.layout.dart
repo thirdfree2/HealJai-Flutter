@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/view/psychologist_screens/psychologist_appoint_page.dart';
+import 'package:flutter_application_1/view/psychologist_screens/psychologist_chatlist_page.dart';
+import 'package:flutter_application_1/view/psychologist_screens/psychologist_profile_page.dart';
+import 'package:flutter_application_1/view/psychologist_screens/psycholonist_home_page.dart';
 import 'package:flutter_application_1/view/screens/appoinment_page.dart';
 import 'package:flutter_application_1/view/screens/chat_list_user_page.dart';
 import 'package:flutter_application_1/view/screens/home_page.dart';
@@ -8,16 +12,15 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'dart:convert';
 
-
-class MainView extends StatefulWidget {
+class PsyMain extends StatefulWidget {
   final token;
-  const MainView({@required this.token, Key? key}) : super(key: key);
+  const PsyMain({@required this.token, Key? key}) : super(key: key);
 
   @override
-  State<MainView> createState() => _MainViewState();
+  State<PsyMain> createState() => _PsyMainState();
 }
 
-class _MainViewState extends State<MainView> {
+class _PsyMainState extends State<PsyMain> {
   late final Map<String, dynamic> jwtDecodedToken;
   late final PageController _page;
   int currentPage = 0;
@@ -46,10 +49,10 @@ class _MainViewState extends State<MainView> {
           });
         }),
         children: <Widget>[
-          HomePagefix(token: widget.token),
-          ChatListPage(),
-          AppointmentPage(),
-          ProfilePage(),
+          PsyHomePage(token: widget.token),
+          PsyAppointPage(),
+          PsyChatListPage(), // เปลี่ยน HomePagefix เป็น HomePage // เปลี่ยนชื่อเมนู ChatListPage เป็น ChatListUserPage
+          PsyProfilePage(token: widget.token),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -59,7 +62,7 @@ class _MainViewState extends State<MainView> {
             currentPage = page;
             _page.animateToPage(
               page,
-              duration: const Duration(microseconds: 500),
+              duration: const Duration(milliseconds: 500), // แก้ duration เป็น milliseconds
               curve: Curves.easeInOut,
             );
           });
