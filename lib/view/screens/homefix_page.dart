@@ -120,133 +120,149 @@ class _HomePagefixState extends State<HomePagefix> {
       body: Container(
         child: Column(children: <Widget>[
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
             child: Row(
               children: [
                 // SizedBox(height: 100,),
                 Text(
                   'Appointment',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
                 ),
               ],
             ),
           ),
-          ListView.builder(
-            shrinkWrap: true,
-            itemCount: appointmentTodayList.length,
-            itemBuilder: (BuildContext context, int index) {
-              if (appointmentTodayList.isEmpty) {
-                return Center(
-                  child: Text("Appointment Not Found"),
-                );
-              }
-              final appointmentToday = appointmentTodayList[index];
-              final chat_id = appointmentToday['psychologist_appointment_id'];
-              final target_id = appointmentToday['psychologist_id'];
-              final doc_name = appointmentToday['user_name'];
-              final psychologist_id = appointmentToday['psychologist_id'];
-              final appoint_time = appointmentToday['slot_time'];
-              final appoint_date = appointmentToday['slot_date'];
-              final status = appointmentToday['status'];
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Center(
-                  child: Card(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 20),
-                      child: Column(
-                        children: [
-                          ListTile(
-                            leading: Padding(
-                              padding: const EdgeInsets.only(),
-                              child: FlutterLogo(size: 80.0),
-                            ),
-                            title: Container(
-                              child: Column(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+          SingleChildScrollView(
+            child: Container(
+              height: 340,
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: appointmentTodayList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  if (appointmentTodayList.isEmpty) {
+                    return Center(
+                      child: Text("Appointment Not Found"),
+                    );
+                  }
+                  final appointmentToday = appointmentTodayList[index];
+                  final chat_id =
+                      appointmentToday['psychologist_appointment_id'];
+                  final target_id = appointmentToday['psychologist_id'];
+                  final doc_name = appointmentToday['user_name'];
+                  final psychologist_id = appointmentToday['psychologist_id'];
+                  final appoint_time = appointmentToday['slot_time'];
+                  final appoint_date = appointmentToday['slot_date'];
+                  final status = appointmentToday['status'];
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Center(
+                      child: Card(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 10),
+                          child: Column(
+                            children: [
+                              ListTile(
+                                leading: Padding(
+                                  padding: const EdgeInsets.only(right: 10),
+                                  child: FlutterLogo(size: 70.0),
+                                ),
+                                title: Container(
+                                  child: Column(
                                     children: [
-                                      Container(
-                                        child: Text(
-                                          '$doc_name',
-                                          style: TextStyle(
-                                              fontSize: 19,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                      Container(
-                                        child: IconButton(
-                                          icon: Transform.scale(
-                                            scale: 1.2,
-                                            child: Icon(Icons.settings),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Container(
+                                            child: Text(
+                                              '$doc_name',
+                                              style: TextStyle(
+                                                  fontSize: 19,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
                                           ),
-                                          onPressed: () {},
-                                        ),
+                                          Container(
+                                            child: IconButton(
+                                              icon: Transform.scale(
+                                                scale: 1,
+                                                child: Icon(Icons.settings),
+                                              ),
+                                              onPressed: () {},
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ],
                                   ),
-                                ],
+                                ),
+                                subtitle: Padding(
+                                  padding: const EdgeInsets.only(top: 5),
+                                  child: Column(
+                                    children: [
+                                      Text('Appointment Time : $appoint_time'),
+                                      Text('Date : $appoint_date'),
+                                    ],
+                                  ),
+                                ),
                               ),
-                            ),
-                            subtitle: Padding(
-                              padding: const EdgeInsets.only(top: 5),
-                              child: Column(
-                                children: [
-                                  Text('Appointment Time : $appoint_time'),
-                                  Text('Date : $appoint_date'),
-                                ],
+                              Padding(
+                                padding: EdgeInsets.only(top: 0),
+                                child: Button(
+                                    width: 300,
+                                    title: 'Start Chat',
+                                    onPressed: () => {
+                                          Get.to(ChatdocScreen(
+                                            token: widget.token,
+                                            sourceId: id,
+                                            target_id: target_id,
+                                          ))
+                                        },
+                                    disable: false),
                               ),
-                            ),
-                            isThreeLine: true,
+                            ],
                           ),
-                          Padding(
-                            padding: EdgeInsets.only(top: 5),
-                            child: Button(
-                                width: 300,
-                                title: 'Start Chat',
-                                onPressed: () => {
-                                      Get.to(ChatdocScreen(token: widget.token,sourceId: id,target_id: target_id,))
-                                    },
-                                disable: false),
-                          ),
-                        ],
+                        ),
                       ),
                     ),
-                  ),
-                ),
-              );
-            },
+                  );
+                },
+              ),
+            ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             child: Row(
               children: [
                 Text('Psychologist',
-                    style:
-                        TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+                    style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white)),
               ],
             ),
           ),
-          Expanded(
-            child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: psychologistList.length,
-              itemBuilder: (BuildContext context, int index) {
-                if (psychologistList.isEmpty) {
-                  return Center(
-                    child: Text("Psychologist Not Found"),
-                  );
-                }
-                final psychologist = psychologistList[index];
-                final psychologist_name = psychologist['UserName'];
-                final psychologist_id = psychologist['UserID'];
-                final address = psychologist['address'];
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Center(
+          SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Container(
+              height: 200,
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: psychologistList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  if (psychologistList.isEmpty) {
+                    return Center(
+                      child: Text("Psychologist Not Found"),
+                    );
+                  }
+                  final psychologist = psychologistList[index];
+                  final psychologist_name = psychologist['UserName'];
+                  final psychologist_id = psychologist['UserID'];
+                  final address = psychologist['address'];
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: Card(
                       child: ListTile(
                         onTap: () {
@@ -262,15 +278,15 @@ class _HomePagefixState extends State<HomePagefix> {
                                 ),
                               ));
                         },
-                        leading: FlutterLogo(size: 72.0),
+                        leading: FlutterLogo(size: 60.0),
                         title: Text('$psychologist_name'),
                         subtitle: Text('Address : $address'),
                         isThreeLine: true,
                       ),
                     ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
           ),
         ]),

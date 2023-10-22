@@ -146,8 +146,11 @@ class _PsyHomePageState extends State<PsyHomePage> {
                                     width: 300,
                                     title: 'Start Chat',
                                     onPressed: () => {
-                                          Get.to(
-                                              ChatdocScreen(token: widget.token, sourceId: id, target_id: user_id,))
+                                          Get.to(ChatdocScreen(
+                                            token: widget.token,
+                                            sourceId: id,
+                                            target_id: user_id,
+                                          ))
                                         },
                                     disable: false),
                               ),
