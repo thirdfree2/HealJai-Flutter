@@ -8,7 +8,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'dart:convert';
 
-
 class MainView extends StatefulWidget {
   final token;
   const MainView({@required this.token, Key? key}) : super(key: key);
@@ -79,7 +78,7 @@ class _MainViewState extends State<MainView> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.account_circle,
+              Icons.timelapse,
             ),
             label: 'Appointments',
           ),
