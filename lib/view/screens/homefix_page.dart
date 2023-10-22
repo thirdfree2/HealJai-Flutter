@@ -136,7 +136,7 @@ class _HomePagefixState extends State<HomePagefix> {
           ),
           SingleChildScrollView(
             child: Container(
-              height: 340,
+              height: MediaQuery.of(context).size.height * 0.4,
               child: ListView.builder(
                 shrinkWrap: true,
                 itemCount: appointmentTodayList.length,
@@ -247,7 +247,7 @@ class _HomePagefixState extends State<HomePagefix> {
           SingleChildScrollView(
             scrollDirection: Axis.vertical,
             child: Container(
-              height: 200,
+              height: MediaQuery.of(context).size.height * 0.22,
               child: ListView.builder(
                 shrinkWrap: true,
                 itemCount: psychologistList.length,

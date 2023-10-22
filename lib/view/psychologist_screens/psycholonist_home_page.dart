@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/view/screens/chat_screen_page.dart';
 import 'package:get/get.dart';
@@ -68,99 +70,114 @@ class _PsyHomePageState extends State<PsyHomePage> {
         child: Padding(
           padding: const EdgeInsets.only(top: 30),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Incoming Appointment"),
-              ListView.builder(
-                shrinkWrap: true,
-                itemCount: appointment.length,
-                itemBuilder: (BuildContext context, int index) {
-                  if (appointment.isEmpty) {
-                    return Center(
-                      child: Text("Appointment Not Found"),
-                    );
-                  }
-                  final appointmentToday = appointment[index];
-                  final chat_id = appointmentToday['id'];
-                  final user_id = appointmentToday['user_id'];
-                  final target_id = appointmentToday['psychologist_id'];
-                  final appoint_time = appointmentToday['slot_time'];
-                  final appoint_date = appointmentToday['slot_date'];
-                  final status = appointmentToday['status'];
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Center(
-                      child: Card(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 20),
-                          child: Column(
-                            children: [
-                              ListTile(
-                                leading: Padding(
-                                  padding: const EdgeInsets.only(),
-                                  child: FlutterLogo(size: 80.0),
-                                ),
-                                title: Container(
-                                  child: Column(
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+              Container(
+                padding: EdgeInsets.only(left: 15),
+                child: Text(
+                  "Incoming Appointment",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+                ),
+              ),
+              SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.7,
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: appointment.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      if (appointment.isEmpty) {
+                        return Center(
+                          child: Text("Appointment Not Found"),
+                        );
+                      }
+                      final appointmentToday = appointment[index];
+                      final chat_id = appointmentToday['id'];
+                      final user_id = appointmentToday['user_id'];
+                      final target_id = appointmentToday['psychologist_id'];
+                      final appoint_time = appointmentToday['slot_time'];
+                      final appoint_date = appointmentToday['slot_date'];
+                      final status = appointmentToday['status'];
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Center(
+                          child: Card(
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 10),
+                              child: Column(
+                                children: [
+                                  ListTile(
+                                    leading: Padding(
+                                      padding: const EdgeInsets.only(),
+                                      child: FlutterLogo(size: 80.0),
+                                    ),
+                                    title: Container(
+                                      child: Column(
                                         children: [
-                                          Container(
-                                            child: Text(
-                                              '$user_id',
-                                              style: TextStyle(
-                                                  fontSize: 19,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ),
-                                          Container(
-                                            child: IconButton(
-                                              icon: Transform.scale(
-                                                scale: 1.2,
-                                                child: Icon(Icons.settings),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Container(
+                                                child: Text(
+                                                  '$user_id',
+                                                  style: TextStyle(
+                                                      fontSize: 19,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
                                               ),
-                                              onPressed: () {},
-                                            ),
+                                              Container(
+                                                child: IconButton(
+                                                  icon: Transform.scale(
+                                                    scale: 1.2,
+                                                    child: Icon(Icons.settings),
+                                                  ),
+                                                  onPressed: () {},
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ],
                                       ),
-                                    ],
+                                    ),
+                                    subtitle: Padding(
+                                      padding: const EdgeInsets.only(top: 5),
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                              'Appointment Time : $appoint_time'),
+                                          Text('Date : $appoint_date'),
+                                        ],
+                                      ),
+                                    ),
+                                    isThreeLine: true,
                                   ),
-                                ),
-                                subtitle: Padding(
-                                  padding: const EdgeInsets.only(top: 5),
-                                  child: Column(
-                                    children: [
-                                      Text('Appointment Time : $appoint_time'),
-                                      Text('Date : $appoint_date'),
-                                    ],
+                                  Padding(
+                                    padding: EdgeInsets.only(top: 5),
+                                    child: Button(
+                                        width: 300,
+                                        title: 'Start Chat',
+                                        onPressed: () => {
+                                              Get.to(ChatdocScreen(
+                                                token: widget.token,
+                                                sourceId: id,
+                                                target_id: user_id,
+                                              ))
+                                            },
+                                        disable: false),
                                   ),
-                                ),
-                                isThreeLine: true,
+                                ],
                               ),
-                              Padding(
-                                padding: EdgeInsets.only(top: 5),
-                                child: Button(
-                                    width: 300,
-                                    title: 'Start Chat',
-                                    onPressed: () => {
-                                          Get.to(ChatdocScreen(
-                                            token: widget.token,
-                                            sourceId: id,
-                                            target_id: user_id,
-                                          ))
-                                        },
-                                    disable: false),
-                              ),
-                            ],
+                            ),
                           ),
                         ),
-                      ),
-                    ),
-                  );
-                },
+                      );
+                    },
+                  ),
+                ),
               ),
             ],
           ),
