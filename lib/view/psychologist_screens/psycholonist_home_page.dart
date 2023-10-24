@@ -76,7 +76,10 @@ class _PsyHomePageState extends State<PsyHomePage> {
                 padding: EdgeInsets.only(left: 15),
                 child: Text(
                   "Incoming Appointment",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 24,
+                  ),
                 ),
               ),
               SingleChildScrollView(

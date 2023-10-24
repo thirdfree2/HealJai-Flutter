@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/utils/config.dart';
 import 'package:flutter_application_1/view/screens/auth_page.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -6,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class PsyProfilePage extends StatefulWidget {
   final token;
   const PsyProfilePage({@required this.token, Key? key}) : super(key: key);
-  
+
   @override
   State<PsyProfilePage> createState() => _PsyProfilePageState();
 }
@@ -15,7 +16,6 @@ class _PsyProfilePageState extends State<PsyProfilePage> {
   late String email;
   late int id;
   late String name;
-
 
   @override
   void initState() {
@@ -26,12 +26,15 @@ class _PsyProfilePageState extends State<PsyProfilePage> {
     id = jwtDecodedToken['id'];
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('โปรไฟล์ของคุณ'),
+        backgroundColor: Config.primaryColor,
+        title: Text(
+          "$name",
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 27),
+        ),
       ),
       body: Center(
         child: Column(
