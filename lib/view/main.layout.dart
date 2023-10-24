@@ -46,7 +46,6 @@ class _MainViewState extends State<MainView> {
         }),
         children: <Widget>[
           HomePagefix(token: widget.token),
-          ChatListPage(),
           AppointmentPage(),
           ProfilePage(),
         ],
@@ -69,12 +68,6 @@ class _MainViewState extends State<MainView> {
               Icons.home,
             ),
             label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.chat,
-            ),
-            label: 'Chat',
           ),
           BottomNavigationBarItem(
             icon: Icon(

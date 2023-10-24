@@ -51,7 +51,7 @@ class _PsyMainState extends State<PsyMain> {
         children: <Widget>[
           PsyHomePage(token: widget.token),
           PsyAppointPage(),
-          PsyChatListPage(), // เปลี่ยน HomePagefix เป็น HomePage // เปลี่ยนชื่อเมนู ChatListPage เป็น ChatListUserPage
+          // เปลี่ยน HomePagefix เป็น HomePage // เปลี่ยนชื่อเมนู ChatListPage เป็น ChatListUserPage
           PsyProfilePage(token: widget.token),
         ],
       ),
@@ -62,7 +62,8 @@ class _PsyMainState extends State<PsyMain> {
             currentPage = page;
             _page.animateToPage(
               page,
-              duration: const Duration(milliseconds: 500), // แก้ duration เป็น milliseconds
+              duration: const Duration(
+                  milliseconds: 500), // แก้ duration เป็น milliseconds
               curve: Curves.easeInOut,
             );
           });
@@ -76,13 +77,7 @@ class _PsyMainState extends State<PsyMain> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.chat,
-            ),
-            label: 'Chat',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.account_circle,
+              Icons.timelapse_outlined,
             ),
             label: 'Appointments',
           ),
