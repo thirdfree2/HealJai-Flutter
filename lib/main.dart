@@ -67,7 +67,6 @@ class App extends StatelessWidget {
         'register': (context) => const RigisterPage(),
         'main': (context) => MainView(token: token),
         'doc_details': (context) => const DoctorDetails(),
-        'booking_page': (context) => const BookingPage(),
         'success_booking': (context) => const AppointmentBooked(),
         'chatpage': (context) => ChatdocScreen(token: token),
       },

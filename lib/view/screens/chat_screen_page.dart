@@ -87,7 +87,7 @@ class _ChatdocScreenState extends State<ChatdocScreen> {
           IconButton(
             icon: Icon(Icons.phone), // ใช้ไอคอนโทรศัพท์
             onPressed: () {
-              Get.to(Callvideo(userName: name,userID: id.toString(),));
+              Get.to(Callvideo(userName: name,userID: id,));
             },
           ),
         ],

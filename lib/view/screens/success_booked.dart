@@ -36,7 +36,7 @@ class _AppointmentBookedState extends State<AppointmentBooked> {
     String date,
     String time,
   ) async {
-    final path = ApiUrls.localhost;
+    const path = ApiUrls.localhost;
     final apiUrl = Uri.parse(
         '$path/user/paymentrequest'); // เปลี่ยน YOUR_API_URL เป็น URL ของ API ของคุณ
     final response = await http.post(

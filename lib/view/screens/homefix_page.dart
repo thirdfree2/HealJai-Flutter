@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/components/button.dart';
+import 'package:flutter_application_1/view/screens/calendarfixv2.dart';
 import 'package:flutter_application_1/view/screens/chat_screen_page.dart';
 import 'package:flutter_application_1/view/screens/doctor_details.dart';
+import 'package:flutter_application_1/view/screens/refund_page.dart';
 import 'package:get/get.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:flutter_application_1/utils/config.dart';
@@ -20,10 +22,10 @@ class _HomePagefixState extends State<HomePagefix> {
   late String email;
   late int id;
   late String name;
+  late String status;
 
   List<dynamic> psychologistList = [];
   List<dynamic> appointmentTodayList = [];
-  final dummy_status = 'None';
 
   @override
   void initState() {
@@ -32,6 +34,7 @@ class _HomePagefixState extends State<HomePagefix> {
     email = jwtDecodedToken['email'];
     name = jwtDecodedToken['name'];
     id = jwtDecodedToken['id'];
+    status = jwtDecodedToken['status'];
     fetchPsychologists();
     fetchAppointment();
   }
@@ -119,35 +122,26 @@ class _HomePagefixState extends State<HomePagefix> {
       backgroundColor: const Color.fromARGB(255, 60, 184, 124),
       body: Container(
         child: Column(children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-            child: Row(
-              children: [
-                // SizedBox(height: 100,),
-                Text(
-                  'Appointment',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-          ),
           ListView.builder(
             shrinkWrap: true,
             itemCount: appointmentTodayList.length,
             itemBuilder: (BuildContext context, int index) {
-              if (appointmentTodayList.isEmpty) {
-                return Center(
-                  child: Text("Appointment Not Found"),
-                );
-              }
               final appointmentToday = appointmentTodayList[index];
-              final chat_id = appointmentToday['psychologist_appointment_id'];
+              final appointStatus = appointmentToday['text_status'];
+
+              // ตรวจสอบว่า appointStatus มีค่าเท่ากับ "Incoming"
+              if (appointStatus != "Incoming") {
+                return Container(); // ไม่แสดงรายการที่ไม่เป็น "Incoming"
+              }
+
+              // ต่อไปคือโค้ดสำหรับรายการที่เป็น "Incoming"
               final target_id = appointmentToday['psychologist_id'];
-              final doc_name = appointmentToday['user_name'];
-              final psychologist_id = appointmentToday['psychologist_id'];
+              final appointmentID = appointmentToday['id'];
+              final doc_name = appointmentToday['UserName'];
               final appoint_time = appointmentToday['slot_time'];
               final appoint_date = appointmentToday['slot_date'];
-              final status = appointmentToday['status'];
+              final paymentID = appointmentToday['PaymentID'];
+
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Center(
@@ -157,6 +151,8 @@ class _HomePagefixState extends State<HomePagefix> {
                           horizontal: 10, vertical: 20),
                       child: Column(
                         children: [
+                          Text('AppointmentToday'),
+                          // ตรวจสอบว่า appointStatus มีค่าเท่ากับ "Incoming"
                           ListTile(
                             leading: Padding(
                               padding: const EdgeInsets.only(),
@@ -173,17 +169,75 @@ class _HomePagefixState extends State<HomePagefix> {
                                         child: Text(
                                           '$doc_name',
                                           style: TextStyle(
-                                              fontSize: 19,
-                                              fontWeight: FontWeight.bold),
+                                            fontSize: 19,
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
                                       ),
                                       Container(
-                                        child: IconButton(
-                                          icon: Transform.scale(
-                                            scale: 1.2,
-                                            child: Icon(Icons.settings),
-                                          ),
-                                          onPressed: () {},
+                                        child: PopupMenuButton<String>(
+                                          onSelected: (String choice) {
+                                            if (choice == 'Option 1') {
+                                              DateTime appointmentDate =
+                                                  DateTime.parse(appoint_date);
+                                              int daysToSubtract = 1;
+                                              DateTime modifiedDate =
+                                                  appointmentDate.subtract(
+                                                      Duration(
+                                                          days:
+                                                              daysToSubtract));
+                                              DateTime currentDate =
+                                                  DateTime.now();
+
+                                              if (modifiedDate.year ==
+                                                      currentDate.year &&
+                                                  modifiedDate.month ==
+                                                      currentDate.month &&
+                                                  modifiedDate.day ==
+                                                      currentDate.day) {
+                                                showDialog(
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return AlertDialog(
+                                                        title: Text(
+                                                            'เงื่อนไขการ Refund ไม่ถูกต้อง'),
+                                                        actions: <Widget>[
+                                                          Button(
+                                                            width: 100,
+                                                            title: 'Exit',
+                                                            onPressed: () {
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pop();
+                                                            },
+                                                            disable: false,
+                                                          )
+                                                        ],
+                                                      );
+                                                    });
+                                              } else {
+                                                Get.to(RefundPage(
+                                                  userID: id,
+                                                  paymentID: paymentID,
+                                                  appointmentID: appointmentID,
+                                                ));
+                                              }
+                                            }
+                                          },
+                                          itemBuilder: (BuildContext context) {
+                                            return <PopupMenuEntry<String>>[
+                                              PopupMenuItem<String>(
+                                                value: 'Option 1',
+                                                child: Text(
+                                                  'Refund',
+                                                  style: TextStyle(
+                                                    color: Colors.red,
+                                                  ),
+                                                ),
+                                              ),
+                                              // เพิ่มตัวเลือกอื่น ๆ ตามต้องการ
+                                            ];
+                                          },
                                         ),
                                       ),
                                     ],
@@ -205,12 +259,17 @@ class _HomePagefixState extends State<HomePagefix> {
                           Padding(
                             padding: EdgeInsets.only(top: 5),
                             child: Button(
-                                width: 300,
-                                title: 'Start Chat',
-                                onPressed: () => {
-                                      Get.to(ChatdocScreen(token: widget.token,sourceId: id,target_id: target_id,))
-                                    },
-                                disable: false),
+                              width: 300,
+                              title: 'Start Chat',
+                              onPressed: () => {
+                                Get.to(ChatdocScreen(
+                                  token: widget.token,
+                                  sourceId: id,
+                                  target_id: target_id,
+                                ))
+                              },
+                              disable: false,
+                            ),
                           ),
                         ],
                       ),
@@ -257,7 +316,7 @@ class _HomePagefixState extends State<HomePagefix> {
                                   psychologist_name: psychologist_name,
                                   psychologist_id: psychologist_id,
                                   user_id: id,
-                                  status: dummy_status,
+                                  status: status,
                                   token: widget.token,
                                 ),
                               ));

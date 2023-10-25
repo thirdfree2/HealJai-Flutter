@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/view/psychologist_screens/psychologist_sent_page.dart';
 import 'package:flutter_application_1/view/screens/chat_screen_page.dart';
 import 'package:get/get.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
@@ -21,13 +22,13 @@ class PsyHomePage extends StatefulWidget {
 
 class _PsyHomePageState extends State<PsyHomePage> {
   late String email;
-  late int id;
+  late int docid;
   late String name;
 
   List<dynamic> appointment = [];
   Future<void> fetchAppointment() async {
     final path = ApiUrls.localhost;
-    final apiUrl = '$path/appointment/psychologist/$id';
+    final apiUrl = '$path/appointment/psychologist/$docid';
     final response = await http.get(Uri.parse(apiUrl));
     if (response.statusCode == 200) {
       final jsonData = jsonDecode(response.body);
@@ -47,8 +48,8 @@ class _PsyHomePageState extends State<PsyHomePage> {
     Map<String, dynamic> jwtDecodedToken = JwtDecoder.decode(widget.token);
     email = jwtDecodedToken['email'];
     name = jwtDecodedToken['name'];
-    id = jwtDecodedToken['id'];
-    debugPrint('Doctor Details Page - User_id: $id');
+    docid = jwtDecodedToken['id'];
+    debugPrint('Doctor Details Page - User_id: $docid');
     fetchAppointment();
   }
 
@@ -85,7 +86,10 @@ class _PsyHomePageState extends State<PsyHomePage> {
                   final target_id = appointmentToday['psychologist_id'];
                   final appoint_time = appointmentToday['slot_time'];
                   final appoint_date = appointmentToday['slot_date'];
-                  final status = appointmentToday['status'];
+                  final status = appointmentToday['text_status'];
+                  if (status != "Incoming") {
+                    return SizedBox.shrink();
+                  }
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Center(
@@ -116,12 +120,44 @@ class _PsyHomePageState extends State<PsyHomePage> {
                                             ),
                                           ),
                                           Container(
-                                            child: IconButton(
-                                              icon: Transform.scale(
-                                                scale: 1.2,
-                                                child: Icon(Icons.settings),
-                                              ),
-                                              onPressed: () {},
+                                            child: PopupMenuButton<String>(
+                                              onSelected: (String choice) {
+                                                if (choice == 'Option 1') {
+                                                  Get.to(WriteInsurtion(
+                                                    apppintmentID: chat_id,
+                                                    patientID: target_id,
+                                                    senderID: docid,
+                                                  ));
+                                                } else if (choice ==
+                                                    'Option 2') {
+                                                  // คำสั่งที่ต้องการให้ Option 2 ทำ
+                                                }
+                                              },
+                                              itemBuilder:
+                                                  (BuildContext context) {
+                                                return <PopupMenuEntry<String>>[
+                                                  PopupMenuItem<String>(
+                                                    value: 'Option 1',
+                                                    child: Text(
+                                                      'เขียนคำแนะนำ',
+                                                      style: TextStyle(
+                                                        color: Colors.black,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  PopupMenuItem<String>(
+                                                    value: 'Option 2',
+                                                    child: Text(
+                                                      'Cancel',
+                                                      style: TextStyle(
+                                                        color: Colors
+                                                            .red, // สีของ Option 2
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  // เพิ่มตัวเลือกอื่น ๆ ตามต้องการ
+                                                ];
+                                              },
                                             ),
                                           ),
                                         ],
@@ -146,8 +182,11 @@ class _PsyHomePageState extends State<PsyHomePage> {
                                     width: 300,
                                     title: 'Start Chat',
                                     onPressed: () => {
-                                          Get.to(
-                                              ChatdocScreen(token: widget.token, sourceId: id, target_id: user_id,))
+                                          Get.to(ChatdocScreen(
+                                            token: widget.token,
+                                            sourceId: docid,
+                                            target_id: user_id,
+                                          ))
                                         },
                                     disable: false),
                               ),

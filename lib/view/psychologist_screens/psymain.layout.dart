@@ -50,8 +50,7 @@ class _PsyMainState extends State<PsyMain> {
         }),
         children: <Widget>[
           PsyHomePage(token: widget.token),
-          PsyAppointPage(),
-          PsyChatListPage(), // เปลี่ยน HomePagefix เป็น HomePage // เปลี่ยนชื่อเมนู ChatListPage เป็น ChatListUserPage
+          PsyAppointPage(),// เปลี่ยน HomePagefix เป็น HomePage // เปลี่ยนชื่อเมนู ChatListPage เป็น ChatListUserPage
           PsyProfilePage(token: widget.token),
         ],
       ),
@@ -76,13 +75,7 @@ class _PsyMainState extends State<PsyMain> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.chat,
-            ),
-            label: 'Chat',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.account_circle,
+              Icons.schedule,
             ),
             label: 'Appointments',
           ),
