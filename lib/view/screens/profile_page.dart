@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/utils/config.dart';
 import 'package:flutter_application_1/view/screens/auth_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -7,7 +8,8 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('โปรไฟล์ของคุณ'),
+        backgroundColor: Config.primaryColor,
+        title: Text("Profile Username"),
       ),
       body: Center(
         child: Column(
