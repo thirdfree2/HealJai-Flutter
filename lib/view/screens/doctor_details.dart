@@ -4,11 +4,13 @@ import 'package:flutter_application_1/components/custom_appbar.dart';
 import 'package:flutter_application_1/view/screens/booking_page.dart';
 import 'package:flutter_application_1/view/screens/calendarfix.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter_application_1/utils/api_url.dart';
 
 import '../../utils/config.dart';
+import 'calendarfixv2.dart';
 
 class DoctorDetails extends StatefulWidget {
   final token;
@@ -73,7 +75,17 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                 width: double.infinity,
                 title: 'Start Booking',
                 onPressed: () {
-                  if (widget.status != 'In Appointment') {
+                  if (widget.status != 'InAppointment') {
+                    // Get.to(CalendarFixSecond(
+                    //     psychologist_id: widget.psychologist_id,
+                    //     user_id: widget.user_id,
+                    //     token: widget.token,
+                    //     ));
+                    // Get.to(BookingPage(
+                    //   psychologist_id: widget.psychologist_id,
+                    //   user_id: widget.user_id,
+                    //   token: widget.token,
+                    // ));
                     Navigator.push(
                         context,
                         MaterialPageRoute(
