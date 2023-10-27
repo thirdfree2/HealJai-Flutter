@@ -34,30 +34,36 @@ class _OTPVerifyState extends State<OTPVerify> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Config.primaryColor,
         title: Text("Verify OTP"),
       ),
       body: Column(
         children: <Widget>[
-          TextFormField(
-            controller: _otpController,
-            keyboardType: TextInputType.number,
-            cursorColor: Config.primaryColor,
-            decoration: InputDecoration(
-              hintText: 'Enter OTP',
-              labelText: 'OTP',
-              alignLabelWithHint: true,
+          Container(
+            padding: EdgeInsets.all(15),
+            child: TextFormField(
+              controller: _otpController,
+              keyboardType: TextInputType.number,
+              cursorColor: Config.primaryColor,
+              decoration: InputDecoration(
+                hintText: 'Enter OTP',
+                labelText: 'OTP',
+                alignLabelWithHint: true,
+              ),
             ),
           ),
-          Config.spaceSmall,
-          Button(
-            width: double.infinity,
-            title: 'Verify OTP',
-            onPressed: () async {
-              // ตรวจสอบค่า OTP ใน _otpController ด้วยระบบ OTP ที่คุณใช้
-              // ถ้า OTP ถูกต้อง คุณสามารถดำเนินการลงทะเบียนผู้ใช้ในระบบของคุณ
-              // ในกรณีนี้คุณอาจต้องทำการส่งค่า OTP ไปยังระบบของคุณผ่าน HTTP หรือวิธีอื่น ๆ
-            },
-            disable: false,
+          Container(
+            padding: EdgeInsets.all(15),
+            child: Button(
+              width: double.infinity,
+              title: 'Verify OTP',
+              onPressed: () async {
+                // ตรวจสอบค่า OTP ใน _otpController ด้วยระบบ OTP ที่คุณใช้
+                // ถ้า OTP ถูกต้อง คุณสามารถดำเนินการลงทะเบียนผู้ใช้ในระบบของคุณ
+                // ในกรณีนี้คุณอาจต้องทำการส่งค่า OTP ไปยังระบบของคุณผ่าน HTTP หรือวิธีอื่น ๆ
+              },
+              disable: false,
+            ),
           ),
         ],
       ),
