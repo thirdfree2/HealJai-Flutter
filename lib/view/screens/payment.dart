@@ -13,8 +13,7 @@ class Payment extends StatefulWidget {
   final int user_id;
 
   Payment(
-      {@required 
-      this.token,
+      {@required this.token,
       this.user_id = 0,
       this.psychonist_appointments_id = 0,
       Key? key})
@@ -113,7 +112,10 @@ class _PaymentState extends State<Payment> {
             ),
             ElevatedButton(
               onPressed: _getImage,
-              child: Text('Select Image'),
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Text('Select Image'),
+              ),
             ),
             Center(
               child: Button(

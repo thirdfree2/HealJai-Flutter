@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/utils/config.dart';
 import 'package:flutter_application_1/view/screens/payment.dart';
 import 'package:flutter_application_1/view/screens/success_booked.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -11,8 +12,7 @@ class BookingPagefix extends StatefulWidget {
   final int psychologist_id;
   final int user_id;
   const BookingPagefix(
-      {@required
-      this.token,
+      {@required this.token,
       this.user_id = 0,
       this.psychologist_id = 0,
       Key? key})
@@ -54,6 +54,7 @@ class _BookingPagefixState extends State<BookingPagefix> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Config.primaryColor,
         title: Text('Psychologist Appointments'),
       ),
       body: appointments.isEmpty
