@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/components/button.dart';
 import 'package:flutter_application_1/view/screens/auth_page.dart';
 import 'package:flutter_application_1/view/screens/otp_page.dart';
+import 'package:flutter_application_1/view/screens/auth_page.dart'; 
+import 'package:flutter_application_1/utils/api_url.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';

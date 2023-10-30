@@ -37,7 +37,7 @@ class _BookingPagefixState extends State<BookingPagefix> {
   Future<void> fetchData() async {
     final path = ApiUrls.localhost;
     final psychologist_id = widget.psychologist_id;
-    final apiUrl = '$path/psychologist/calendar/$psychologist_id';
+    final apiUrl = '$path/psychologist/calendar/$psychologist_id/demo';
     final response = await http.get(Uri.parse(apiUrl));
 
     if (response.statusCode == 200) {
@@ -70,36 +70,38 @@ class _BookingPagefixState extends State<BookingPagefix> {
                         appointments[index - 1]['slot_date'];
                 final isDisabled = appointment['status'] == 1;
                 final isSelected = selectedAppointmentIndex == index;
-
-                return Column(
-                  children: <Widget>[
-                    if (isDateChanged)
-                      ListTile(
-                        title: Text('Date: ${appointment['slot_date']}'),
-                      ),
-                    ElevatedButton(
-                      onPressed: isDisabled
-                          ? null
-                          : () {
-                              setState(() {
-                                selectedAppointmentIndex = index;
-                              });
+                return Container(
+                  width: 150,
+                  child: Column(
+                    children: <Widget>[
+                      if (isDateChanged)
+                        ListTile(
+                          title: Text('Date: ${appointment['slot_date']}'),
+                        ),
+                      ElevatedButton(
+                        onPressed: isDisabled
+                            ? null
+                            : () {
+                                setState(() {
+                                  selectedAppointmentIndex = index;
+                                });
+                              },
+                        child: Text('Time: ${appointment['slot_time']}'),
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.resolveWith<Color>(
+                            (Set<MaterialState> states) {
+                              if (isSelected) {
+                                return Colors.red;
+                              }
+                              return isDisabled ? Colors.grey : Colors.blue;
                             },
-                      child: Text('Time: ${appointment['slot_time']}'),
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.resolveWith<Color>(
-                          (Set<MaterialState> states) {
-                            if (isSelected) {
-                              return Colors.red;
-                            }
-                            return isDisabled ? Colors.grey : Colors.blue;
-                          },
+                          ),
                         ),
                       ),
-                    ),
-                    // Add other appointment details here if needed
-                  ],
+                      // Add other appointment details here if needed
+                    ],
+                  ),
                 );
               },
             ),
