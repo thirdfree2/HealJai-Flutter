@@ -125,7 +125,7 @@ class _PsyHomePageState extends State<PsyHomePage> {
                                                 if (choice == 'Option 1') {
                                                   Get.to(WriteInsurtion(
                                                     apppintmentID: chat_id,
-                                                    patientID: target_id,
+                                                    patientID: user_id,
                                                     senderID: docid,
                                                   ));
                                                 } else if (choice ==

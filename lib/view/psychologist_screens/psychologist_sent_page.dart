@@ -28,6 +28,16 @@ class _WriteInsurtionState extends State<WriteInsurtion> {
   final descriptionController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    debugPrint('${widget.apppintmentID}');
+    debugPrint('${widget.patientID}');
+    debugPrint('${widget.senderID}');
+  }
+
+
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),

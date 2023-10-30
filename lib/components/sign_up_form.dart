@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/components/button.dart';
 import 'package:flutter_application_1/view/screens/otp_page.dart';
+import 'package:flutter_application_1/view/screens/auth_page.dart'; 
+import 'package:flutter_application_1/utils/api_url.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
@@ -218,23 +220,30 @@ class _SignUpFormState extends State<SignUpForm> {
                 String password = _passController.text;
                 String tel = _phoneController.text;
 
-                if (userName != null &&
-                    birthDay != null &&
-                    email != null &&
-                    firstName != null &&
-                    lastName != null &&
-                    password != null &&
-                    tel != null) {
-                  Get.to(OTPVerify(
-                    userName: userName,
-                    birthDay: birthDay,
-                    email: email,
-                    firstName: firstName,
-                    lastName: lastName,
-                    password: password,
-                    tel: tel,
-                  ));
+                final path = ApiUrls.localhost;
+                final api1Url = '$path/user/register';
+                var url = Uri.parse(api1Url);
+
+                var response = await http.post(url, body: {
+                  'UserName': userName,
+                  'Birthday': birthDay,
+                  'Email': email,
+                  'FirstName': firstName,
+                  'LastName': lastName,
+                  'Password': password,
+                  'Tel': tel,
+                });
+
+                if (response.statusCode == 200) {
+                  // สามารถใช้ response.body เพื่อดึงข้อมูลที่ได้จาก API
+                  print('API Response: ${response.body}');
+                } else {
+                  print(
+                      'Error calling API. Status code: ${response.statusCode}');
                 }
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => AuthPage()),
+                );
               }
             },
             disable: false,
