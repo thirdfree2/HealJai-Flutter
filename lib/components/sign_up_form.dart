@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/components/button.dart';
+import 'package:flutter_application_1/view/screens/auth_page.dart';
 import 'package:flutter_application_1/view/screens/otp_page.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 import 'package:email_otp/email_otp.dart';
+import 'package:http/http.dart' as http;
+import 'package:flutter_application_1/utils/api_url.dart';
 
 import '../utils/config.dart';
 
@@ -201,13 +204,6 @@ class _SignUpFormState extends State<SignUpForm> {
             width: double.infinity,
             title: 'Sign Up',
             onPressed: () async {
-              myauth.setConfig(
-                  appEmail: "me@rohitchouhan.com",
-                  appName: "Email OTP",
-                  userEmail: _emailController.text,
-                  otpLength: 6,
-                  otpType: OTPType.digitsOnly
-                  );
               bool pass = _formKey.currentState!.validate();
               if (pass) {
                 String userName = _usernameController.text;
@@ -218,23 +214,30 @@ class _SignUpFormState extends State<SignUpForm> {
                 String password = _passController.text;
                 String tel = _phoneController.text;
 
-                if (userName != null &&
-                    birthDay != null &&
-                    email != null &&
-                    firstName != null &&
-                    lastName != null &&
-                    password != null &&
-                    tel != null) {
-                  Get.to(OTPVerify(
-                    userName: userName,
-                    birthDay: birthDay,
-                    email: email,
-                    firstName: firstName,
-                    lastName: lastName,
-                    password: password,
-                    tel: tel,
-                  ));
+                final path = ApiUrls.localhost;
+                final api1Url = '$path/user/register';
+                var url = Uri.parse(api1Url);
+
+                var response = await http.post(url, body: {
+                  'UserName': userName,
+                  'Birthday': birthDay,
+                  'Email': email,
+                  'FirstName': firstName,
+                  'LastName': lastName,
+                  'Password': password,
+                  'Tel': tel,
+                });
+
+                if (response.statusCode == 200) {
+                  // สามารถใช้ response.body เพื่อดึงข้อมูลที่ได้จาก API
+                  print('API Response: ${response.body}');
+                } else {
+                  print(
+                      'Error calling API. Status code: ${response.statusCode}');
                 }
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => AuthPage()),
+                );
               }
             },
             disable: false,
