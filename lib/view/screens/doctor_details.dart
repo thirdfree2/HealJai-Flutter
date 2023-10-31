@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/components/button.dart';
 import 'package:flutter_application_1/components/custom_appbar.dart';
-import 'package:flutter_application_1/view/screens/booking_page.dart';
+
 import 'package:flutter_application_1/view/screens/calendarfix.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/get.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-import 'package:flutter_application_1/utils/api_url.dart';
+
 
 import '../../utils/config.dart';
-import 'calendarfixv2.dart';
+
 
 class DoctorDetails extends StatefulWidget {
   final token;
@@ -32,6 +29,7 @@ class DoctorDetails extends StatefulWidget {
 }
 
 class _DoctorDetailsState extends State<DoctorDetails> {
+  bool isFav = false;
   @override
   void initState() {
     // TODO: implement initState
@@ -42,9 +40,7 @@ class _DoctorDetailsState extends State<DoctorDetails> {
   }
 
   @override
-  bool isFav = false;
   Widget build(BuildContext context) {
-    final docname = widget.psychologist_id;
     return Scaffold(
       appBar: CustomAppBar(
         appTitle: 'Doctor Details',

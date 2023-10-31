@@ -1,35 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 
-class Callvideo extends StatefulWidget {
-  final int userID;
-  final String userName;
-  Callvideo({
-    required this.userID,
-    required this.userName,
-  });
-
-  @override
-  State<Callvideo> createState() => _CallvideoState();
-}
-
-class _CallvideoState extends State<Callvideo> {
-  
+class CallPage extends StatelessWidget {
+  const CallPage({Key? key, required this.callID, required this.user_id, required this.user_name}) : super(key: key);
+  final String callID;
+  final String user_id;
+  final String user_name;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-          child: ZegoUIKitPrebuiltCall(
-        appID: 748440981,
+    return ZegoUIKitPrebuiltCall(
+        appID:
+            2086567153, // Fill in the appID that you get from ZEGOCLOUD Admin Console.
         appSign:
-            'eb899a200a07934471d2943ab298d63befbd7c8b80371d7b3ec52a02de7b9e1e',
-        callID: '54322',
-        config: ZegoUIKitPrebuiltCallConfig.oneOnOneVideoCall()
-          ..onOnlySelfInRoom = (context) => Navigator.pop(context),
-        userID: '12',
-        userName: "Joy2",
-      )),
-    );
+            "a3899f867d191e014732aef964d1368c0f1eed33f988367025f8a79ef19e0712", // Fill in the appSign that you get from ZEGOCLOUD Admin Console.
+        userID: user_id,
+        userName: user_name,
+        callID: callID,
+        // You can also use groupVideo/groupVoice/oneOnOneVoice to make more types of calls.
+        config: ZegoUIKitPrebuiltCallConfig.oneOnOneVideoCall());
   }
 }

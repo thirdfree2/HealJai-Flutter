@@ -1,16 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/view/psychologist_screens/psychologist_appoint_page.dart';
-import 'package:flutter_application_1/view/psychologist_screens/psychologist_chatlist_page.dart';
 import 'package:flutter_application_1/view/psychologist_screens/psychologist_profile_page.dart';
 import 'package:flutter_application_1/view/psychologist_screens/psycholonist_home_page.dart';
-import 'package:flutter_application_1/view/screens/appoinment_page.dart';
-import 'package:flutter_application_1/view/screens/chat_list_user_page.dart';
-import 'package:flutter_application_1/view/screens/home_page.dart';
-import 'package:flutter_application_1/view/screens/homefix_page.dart';
-import 'package:flutter_application_1/view/screens/profile_page.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
-import 'dart:convert';
+
 
 class PsyMain extends StatefulWidget {
   final token;

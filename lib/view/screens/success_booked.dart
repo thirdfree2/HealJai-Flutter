@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/components/button.dart';
-import 'package:flutter_application_1/components/loading.dart';
-import 'package:flutter_application_1/view/splash.view.dart';
+
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'dart:convert';

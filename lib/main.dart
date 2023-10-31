@@ -1,18 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/components/loading.dart';
 import 'package:flutter_application_1/utils/config.dart';
-import 'package:flutter_application_1/view/call.view.dart';
-import 'package:flutter_application_1/view/login.view.dart';
 import 'package:flutter_application_1/view/main.layout.dart';
 import 'package:flutter_application_1/view/psychologist_screens/psycholonist_home_page.dart';
 import 'package:flutter_application_1/view/screens/auth_page.dart';
-import 'package:flutter_application_1/view/screens/booking_page.dart';
-import 'package:flutter_application_1/view/screens/chat_screen_page.dart';
-import 'package:flutter_application_1/view/screens/doctor_details.dart';
-import 'package:flutter_application_1/view/screens/homefix_page.dart';
-import 'package:flutter_application_1/view/psychologist_screens/psychologist_auth_page.dart';
 import 'package:flutter_application_1/view/screens/register_page.dart';
-import 'package:flutter_application_1/view/screens/success_booked.dart';
 import 'package:flutter_application_1/view/splash.view.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -20,7 +12,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  String? token = prefs.getString('token');
   runApp(App(
     token: prefs.getString('token'),
   ));
@@ -66,9 +57,6 @@ class App extends StatelessWidget {
         'loading': (context) => LoadingView(token: token),
         'register': (context) => const RigisterPage(),
         'main': (context) => MainView(token: token),
-        'doc_details': (context) => const DoctorDetails(),
-        'success_booking': (context) => const AppointmentBooked(),
-        'chatpage': (context) => ChatdocScreen(token: token),
       },
     );
   }

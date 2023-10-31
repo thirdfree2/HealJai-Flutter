@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+
 import '../utils/config.dart';
 import 'package:http/http.dart' as http;
 
@@ -49,8 +49,8 @@ class _DoctorCardState extends State<DoctorCard> {
           if (psychonistList.isEmpty) {
             return CircularProgressIndicator();
           }
-          final psychonist = psychonistList[index];
-          final name = psychonist['name'];
+
+
           return Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             height: 150,
