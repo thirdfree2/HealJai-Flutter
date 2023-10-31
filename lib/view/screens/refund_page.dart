@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_application_1/components/loading.dart';
+
 import 'package:flutter_application_1/view/screens/auth_page.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:jwt_decoder/jwt_decoder.dart';
+
 
 import '../../components/button.dart';
 import '../../utils/api_url.dart';

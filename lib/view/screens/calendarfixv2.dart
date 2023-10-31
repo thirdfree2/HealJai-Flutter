@@ -63,8 +63,8 @@ class _CalendarFixSecondState extends State<CalendarFixSecond> {
                 itemCount: appointments.length,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (BuildContext context, int index) {
-                  final appointment = appointments[index];
-                  final slotTimeList = appointment['slot_time'];
+
+
 
                   return Padding(
                     padding: const EdgeInsets.all(15.0),
@@ -73,37 +73,6 @@ class _CalendarFixSecondState extends State<CalendarFixSecond> {
                       height: 200,
                       child: Card(
                         child: ListTile(
-                          title: Text(
-                              'Date in this month: ${appointment['date']}'),
-                          subtitle: Column(
-                            children: slotTimeList.map<Widget>((slotTime) {
-                              final parts =
-                                  slotTime.split(' ');
-                              final slotId = parts[0];
-                              final time = parts[1];
-                              final availability = parts[2] == '0'
-                                  ? 'Available'
-                                  : 'Not Available';
-
-                              return ElevatedButton(
-                                onPressed: () {
-                                  if (parts[2] == '0') {
-                                    setState(() {
-                                      selectedTimeIndex = index;
-                                    });
-                                  }
-                                },
-                                child: Text('Time: $time'),
-                                style: parts[2] == '0'
-                                    ? (index == selectedTimeIndex)
-                                        ? ElevatedButton.styleFrom(
-                                            primary: Colors.green)
-                                        : null
-                                    : ElevatedButton.styleFrom(
-                                        primary: Colors.grey),
-                              );
-                            }).toList(),
-                          ),
                         ),
                       ),
                     ),

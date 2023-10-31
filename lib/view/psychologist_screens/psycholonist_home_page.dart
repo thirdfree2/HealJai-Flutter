@@ -3,13 +3,10 @@ import 'package:flutter_application_1/view/psychologist_screens/psychologist_sen
 import 'package:flutter_application_1/view/screens/chat_screen_page.dart';
 import 'package:get/get.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-
 import '../../components/button.dart';
 import '../../utils/api_url.dart';
 import '../../utils/config.dart';
-import '../screens/auth_page.dart';
 import 'dart:convert';
 
 class PsyHomePage extends StatefulWidget {
@@ -83,7 +80,6 @@ class _PsyHomePageState extends State<PsyHomePage> {
                   final appointmentToday = appointment[index];
                   final chat_id = appointmentToday['id'];
                   final user_id = appointmentToday['user_id'];
-                  final target_id = appointmentToday['psychologist_id'];
                   final appoint_time = appointmentToday['slot_time'];
                   final appoint_date = appointmentToday['slot_date'];
                   final status = appointmentToday['text_status'];

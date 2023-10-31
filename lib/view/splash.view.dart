@@ -1,14 +1,11 @@
 import 'dart:async';
 import 'package:flutter_application_1/view/main.layout.dart';
-import 'package:flutter_application_1/view/psychologist_screens/psycholonist_home_page.dart';
 import 'package:flutter_application_1/view/psychologist_screens/psymain.layout.dart';
 import 'package:flutter_application_1/view/screens/auth_page.dart';
-import 'package:flutter_application_1/view/screens/homefix_page.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/utils/config.dart';
-import 'package:flutter_application_1/view/login.view.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:jwt_decoder/jwt_decoder.dart';
 
 class SplashView extends StatefulWidget {
