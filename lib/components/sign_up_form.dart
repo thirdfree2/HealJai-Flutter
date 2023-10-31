@@ -1,16 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/components/button.dart';
-import 'package:flutter_application_1/view/screens/auth_page.dart';
-import 'package:flutter_application_1/view/screens/otp_page.dart';
 import 'package:flutter_application_1/view/screens/auth_page.dart'; 
 import 'package:flutter_application_1/utils/api_url.dart';
-import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'dart:async';
-import 'dart:convert';
 import 'package:email_otp/email_otp.dart';
-import 'package:http/http.dart' as http;
-import 'package:flutter_application_1/utils/api_url.dart';
 
 import '../utils/config.dart';
 
@@ -206,6 +199,13 @@ class _SignUpFormState extends State<SignUpForm> {
             width: double.infinity,
             title: 'Sign Up',
             onPressed: () async {
+              myauth.setConfig(
+                  appEmail: "me@rohitchouhan.com",
+                  appName: "Email OTP",
+                  userEmail: _emailController.text,
+                  otpLength: 6,
+                  otpType: OTPType.digitsOnly
+                  );
               bool pass = _formKey.currentState!.validate();
               if (pass) {
                 String userName = _usernameController.text;

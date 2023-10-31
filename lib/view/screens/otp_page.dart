@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/utils/config.dart';
-import 'package:email_otp/email_otp.dart';
+
 
 import '../../components/button.dart';
 

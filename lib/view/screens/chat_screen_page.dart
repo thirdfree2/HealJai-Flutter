@@ -3,11 +3,9 @@ import 'package:flutter_application_1/components/own_card.dart';
 import 'package:flutter_application_1/components/reply_card.dart';
 import 'package:flutter_application_1/models/MessageModel.dart';
 import 'package:flutter_application_1/view/call.view.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import 'package:get/get.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
-import 'package:provider/provider.dart';
-import '../../components/custom_appbar.dart';
 import '../../utils/api_url.dart';
 import '../../utils/config.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
@@ -87,7 +85,11 @@ class _ChatdocScreenState extends State<ChatdocScreen> {
           IconButton(
             icon: Icon(Icons.phone), // ใช้ไอคอนโทรศัพท์
             onPressed: () {
-              Get.to(Callvideo(userName: name,userID: id,));
+              Get.to(CallPage(
+                callID: '1',
+                user_id: id.toString(),
+                user_name: name,
+              ));
             },
           ),
         ],

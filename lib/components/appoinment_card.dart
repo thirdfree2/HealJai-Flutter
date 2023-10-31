@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-
 import '../utils/config.dart';
 
 class AppointmentCard extends StatefulWidget {
