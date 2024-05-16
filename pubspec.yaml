@@ -44,7 +44,6 @@ dependencies:
   provider: ^6.0.5
   http: ^0.13.4
   fluttertoast: ^8.2.2
-  zego_uikit_prebuilt_call: ^3.11.1
   font_awesome_flutter: ^10.5.0
   lottie: ^2.6.0
   dart_jsonwebtoken: ^2.11.0

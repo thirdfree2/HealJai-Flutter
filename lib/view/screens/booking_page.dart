@@ -167,10 +167,9 @@ class _BookingPageState extends State<BookingPage> {
                 },
                 child: Text('Make Appointment and Payment'),
                 style: ElevatedButton.styleFrom(
-                  primary: _timeSelected && _dateSelected
+                  foregroundColor: Colors.white, backgroundColor: _timeSelected && _dateSelected
                       ? Colors.blue // Change to your desired color
-                      : Colors.grey, // Change to your desired color
-                  onPrimary: Colors.white,
+                      : Colors.grey,
                   textStyle: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,

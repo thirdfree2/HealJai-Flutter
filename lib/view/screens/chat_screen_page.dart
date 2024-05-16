@@ -85,11 +85,11 @@ class _ChatdocScreenState extends State<ChatdocScreen> {
           IconButton(
             icon: Icon(Icons.phone), // ใช้ไอคอนโทรศัพท์
             onPressed: () {
-              Get.to(CallPage(
-                callID: '1',
-                user_id: id.toString(),
-                user_name: name,
-              ));
+              // Get.to(CallPage(
+              //   callID: '1',
+              //   user_id: id.toString(),
+              //   user_name: name,
+              // ));
             },
           ),
         ],

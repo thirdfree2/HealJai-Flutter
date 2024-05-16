@@ -112,7 +112,7 @@ class _LoginViewState extends State<LoginView> {
                   height: 60,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        primary: const Color(0xFF3F60A0),
+                        backgroundColor: const Color(0xFF3F60A0),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15))),
                     onPressed: () {
